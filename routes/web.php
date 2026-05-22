@@ -1,0 +1,40 @@
+<?php
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', [HomeController::class, "viewHomePage"])->name('home');
+
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/login', function () {
+    return view('pages.login');
+})->name('login');
+Route::post('/login', [AuthController::class, 'loginCheck'])->name('loginCheck');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/signup', [AuthController::class, 'viewSignup'])->name('viewSignup');
+Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+Route::middleware(['auth', 'admin'])->prefix('admin-panel')->group(function () {
+    Route::get('/', [AdminController::class, 'viewAdminPanel'])->name('viewAdminPanel');
+    Route::get('/add-service', [ServiceController::class, 'viewServiceAddForm'])->name('viewServiceAddForm');
+    Route::post('/add-service', [ServiceController::class, 'storeService'])->name('storeService');
+    Route::get('/service-list', [ServiceController::class, 'viewServiceList'])->name('viewServiceList');
+    Route::get('/edit-service/{id}', [ServiceController::class, 'viewServiceEditForm'])->name('viewServiceEditForm');
+    Route::get('/delete-service/{id}', [ServiceController::class, 'deleteService'])->name('deleteService');
+    Route::post('/edit-service', [ServiceController::class, 'editService'])->name('editService');
+    Route::get('/contact-messages', [ContactController::class, 'index'])->name('contactMessages');
+    Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
+});
+
+Route::post('/admin-panel/create-booking', [BookingController::class, 'createBooking'])->middleware('auth')->name('createBooking');
