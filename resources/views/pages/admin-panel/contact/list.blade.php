@@ -6,19 +6,15 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
                 <div class="page-header-kicker">Inbox</div>
-                <h5 class="card-title mb-1">Contact Messages</h5>
-                <p class="text-muted mb-0">Messages submitted from the website contact form.</p>
-            </div>
-        </div>
-
-        <div class="table-responsive">
+                    <h5 class="card-title mb-1">Booking Requests</h5>
+                    <p class="text-muted mb-0">Requests submitted from the website booking form.</p>
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Service</th>
-                        <th>Subject</th>
+                        <th>Phone Number</th>
                         <th>Message</th>
                         <th>Submitted</th>
                     </tr>
@@ -35,7 +31,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No contact messages yet.</td>
+                            <td colspan="6" class="text-center text-muted py-4">No booking requests yet.</td>
                         </tr>
                     @endforelse
                 </tbody>

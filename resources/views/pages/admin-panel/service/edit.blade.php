@@ -32,6 +32,10 @@
                             <label for="short_description" class="form-label">Short Description</label>
                             <textarea class="form-control" id="short_description" name="short_description" rows="3" required>{{ old('short_description', $service->description) }}</textarea>
                         </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Service Price</label>
+                            <input type="number" step="0.01" min="0" class="form-control" id="price" name="price" value="{{ old('price', $service->price) }}" required>
+                        </div>
                         <div class="form-check form-switch mb-4">
                             <input type="checkbox" name="isActive" id="isActive" class="form-check-input" {{$service->isActive == 1 ? "checked" : ""}}>
                             <label for="isActive" class="form-check-label">Active on homepage</label>

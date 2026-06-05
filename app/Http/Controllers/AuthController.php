@@ -39,11 +39,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->isAdmin == 0){
-                Alert::success('Success', 'User Login Successfull');
+                Alert::success('Success', 'User Login Successful');
 
                 return redirect()->route('home');
             }else{
-                Alert::success('Success', 'Admin Login Successfull');
+                Alert::success('Success', 'Admin Login Successful');
                 return redirect()->route('viewAdminPanel');
             }
         }else{
@@ -57,7 +57,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        Alert::success('Success', 'Logout Successfull');
+        Alert::success('Success', 'Logout Successful');
 
         return redirect()->route('login');
     }

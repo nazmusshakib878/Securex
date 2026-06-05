@@ -16,9 +16,11 @@ class ServiceController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'image_url' => ['required', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:0'],
         ]);
 
         $data['description'] = $data['short_description'];
+        $data['price'] = $data['price'];
         unset($data['short_description']);
 
         Service::create($data);
@@ -44,12 +46,14 @@ class ServiceController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'image_url' => ['required', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:0'],
             'isActive' => ['nullable'],
         ]);
 
         $data['title'] = $validated['title'];
         $data['image_url'] = $validated['image_url'];
         $data['description'] = $validated['short_description'];
+        $data['price'] = $validated['price'];
         $data['isActive'] = $req->isActive == "on" ? 1 : 0;
 
         Service::where(["id"=>$validated['id']])->update($data);

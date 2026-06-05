@@ -33,8 +33,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin-panel')->group(function () {
     Route::get('/edit-service/{id}', [ServiceController::class, 'viewServiceEditForm'])->name('viewServiceEditForm');
     Route::get('/delete-service/{id}', [ServiceController::class, 'deleteService'])->name('deleteService');
     Route::post('/edit-service', [ServiceController::class, 'editService'])->name('editService');
+    Route::get('/bookings', [BookingController::class, 'adminIndex'])->name('admin.bookings');
+    Route::post('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('admin.bookings.status');
     Route::get('/contact-messages', [ContactController::class, 'index'])->name('contactMessages');
     Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
 });
 
+Route::middleware('auth')->get('/bookings', [BookingController::class, 'index'])->name('user.bookings');
+Route::middleware('auth')->get('/bookings/{booking}/invoice', [BookingController::class, 'invoice'])->name('bookings.invoice');
+Route::middleware('auth')->post('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 Route::post('/admin-panel/create-booking', [BookingController::class, 'createBooking'])->middleware('auth')->name('createBooking');

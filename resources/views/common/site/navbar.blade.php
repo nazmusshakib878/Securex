@@ -19,12 +19,14 @@
                             <a href="{{ route('home') }}#quote" class="dropdown-item">Free Quote</a>
                         </div>
                     </div>
-                    <a href="{{ route('home') }}#contact" class="nav-item nav-link">Contact</a>
+                    <a href="{{ route('home') }}#booking" class="nav-item nav-link">Booking</a>
                 </div>
                 <button type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
                 @if(Auth::user())
                     @if(Auth::user()->isAdmin)
                         <a href="{{ route('viewAdminPanel') }}" class="btn btn-primary py-2 px-4 ms-3">Dashboard</a>
+                    @else
+                        <a href="{{ route('user.bookings') }}" class="btn btn-primary py-2 px-4 ms-3">My Bookings</a>
                     @endif
                     <a href="{{ route('logout') }}" class="btn btn-danger py-2 px-4 ms-3">Logout</a>
                 @else

@@ -16,6 +16,7 @@
                     <tr>
                         <th>Image</th>
                         <th>Title</th>
+                        <th>Price</th>
                         <th>Description</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -26,6 +27,7 @@
                     <tr>
                         <td><img src="{{$service->image_url}}" alt="{{$service->title}}" height="64" width="88" class="rounded object-fit-cover"></td>
                         <td class="fw-semibold">{{$service->title}}</td>
+                        <td>${{ number_format($service->price, 2) }}</td>
                         <td class="text-muted">{{$service->description}}</td>
                         <td>
                             @if($service->isActive == 1)

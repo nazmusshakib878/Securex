@@ -14,15 +14,18 @@ class ContactController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'service_id' => ['nullable', 'exists:services,id'],
-            'subject' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:30'],
             'message' => ['required', 'string', 'max:2000'],
         ]);
 
+        $data['subject'] = $data['phone'];
+        unset($data['phone']);
+
         ContactMessage::create($data);
 
-        Alert::success('Success', 'Your message has been sent successfully.');
+        Alert::success('Success', 'Your booking request has been sent successfully.');
 
-        return redirect(route('home') . '#contact');
+        return redirect(route('home') . '#booking');
     }
 
     public function index()

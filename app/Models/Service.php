@@ -9,6 +9,11 @@ class Service extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'price' => 'decimal:2',
+        'isActive' => 'boolean',
+    ];
+
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);

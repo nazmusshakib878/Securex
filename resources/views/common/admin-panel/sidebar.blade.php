@@ -12,25 +12,56 @@
                 </button>
             </div>
             <p class="text-white-50 small mb-3">Manage users, services, bookings and website messages.</p>
-            <hr class="border-secondary">
-            <ul class="nav nav-pills flex-column mb-4">
+            <div class="sidebar-quick-card">
+                <span>Workspace</span>
+                <strong>Security Service Admin</strong>
+            </div>
+
+            <div class="sidebar-menu-label">Overview</div>
+            <ul class="nav nav-pills flex-column admin-sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('viewAdminPanel') ? 'active' : '' }}" aria-current="page" href="{{ route('viewAdminPanel') }}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+                    <a class="nav-link {{ request()->routeIs('viewAdminPanel') ? 'active' : '' }}" aria-current="page" href="{{ route('viewAdminPanel') }}">
+                        <span class="nav-index">01</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-menu-label">Services</div>
+            <ul class="nav nav-pills flex-column admin-sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('viewServiceList', 'viewServiceEditForm') ? 'active' : '' }}" aria-current="page" href="{{ route('viewServiceList') }}">
+                        <span class="nav-index">02</span>
+                        <span>Service List</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('viewServiceAddForm') ? 'active' : '' }}" aria-current="page" href="{{ route('viewServiceAddForm') }}"><i class="bi bi-plus-circle"></i>Add Service</a>
+                    <a class="nav-link {{ request()->routeIs('viewServiceAddForm') ? 'active' : '' }}" aria-current="page" href="{{ route('viewServiceAddForm') }}">
+                        <span class="nav-index">03</span>
+                        <span>Add Service</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-menu-label">Operations</div>
+            <ul class="nav nav-pills flex-column mb-4 admin-sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('adminUsers') ? 'active' : '' }}" href="{{ route('adminUsers') }}">
+                        <span class="nav-index">04</span>
+                        <span>Users</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('viewServiceList', 'viewServiceEditForm') ? 'active' : '' }}" aria-current="page" href="{{ route('viewServiceList') }}"><i class="bi bi-card-list"></i>Service List</a>
+                    <a class="nav-link {{ request()->routeIs('admin.bookings') ? 'active' : '' }}" href="{{ route('admin.bookings') }}">
+                        <span class="nav-index">05</span>
+                        <span>Booking Requests</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('contactMessages') ? 'active' : '' }}" href="{{ route('contactMessages') }}"><i class="bi bi-envelope"></i>Contact Messages</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('adminUsers') ? 'active' : '' }}" href="{{ route('adminUsers') }}"><i class="bi bi-people"></i>Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+                    <a class="nav-link nav-link-logout" href="{{ route('logout') }}">
+                        <span class="nav-index"><i class="bi bi-box-arrow-right"></i></span>
+                        <span>Logout</span>
+                    </a>
                 </li>
             </ul>
             <div class="mt-auto pt-3 border-top border-secondary">

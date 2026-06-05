@@ -102,12 +102,14 @@
                         <a href="{{ route('home') }}#testimonials" class="dropdown-item">Testimonial</a>
                     </div>
                 </div>
-                <a href="{{ route('home') }}#contact" class="nav-item nav-link">Contact</a>
+                <a href="{{ route('home') }}#booking" class="nav-item nav-link">Booking</a>
             </div>
             <div class="h-100 d-lg-inline-flex align-items-center gap-2">
                 @auth
                     @if(Auth::user()->isAdmin)
                         <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('viewAdminPanel') }}">Dashboard</a>
+                    @else
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('user.bookings') }}">My Bookings</a>
                     @endif
                     <a class="btn btn-outline-danger rounded-pill py-2 px-4" href="{{ route('logout') }}">Logout</a>
                 @else
@@ -337,7 +339,7 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Quick Links</h5>
                     <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Booking</a>
                     <a class="btn btn-link" href="">Our Services</a>
                     <a class="btn btn-link" href="">Terms & Condition</a>
                     <a class="btn btn-link" href="">Support</a>

@@ -9,6 +9,11 @@ class Booking extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'booking_date' => 'date',
+        'service_price' => 'decimal:2',
+    ];
+
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);

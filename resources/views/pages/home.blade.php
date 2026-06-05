@@ -103,12 +103,14 @@
                         <a href="#testimonials" class="dropdown-item">Testimonial</a>
                     </div>
                 </div>
-                <a href="#contact" class="nav-item nav-link">Contact</a>
+                <a href="#booking" class="nav-item nav-link">Booking</a>
             </div>
             <div class="h-100 d-lg-inline-flex align-items-center gap-2">
                 @auth
                     @if(Auth::user()->isAdmin)
                         <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('viewAdminPanel') }}">Dashboard</a>
+                    @else
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('user.bookings') }}">My Bookings</a>
                     @endif
                     <a class="btn btn-outline-danger rounded-pill py-2 px-4" href="{{ route('logout') }}">Logout</a>
                 @else
@@ -285,6 +287,7 @@
                                 <img class="img-fluid" src="{{ $service->image_url }}" alt="{{ $service->title }}">
                             </div>
                             <h4 class="mb-3">{{ $service->title }}</h4>
+                            <p class="text-primary fw-bold mb-2">Price: ${{ number_format($service->price, 2) }}</p>
                             <p class="mb-4">{{ $service->description }}</p>
                             <a class="btn" href="#quote"><i class="fa fa-arrow-right text-white me-3"></i>Book Now</a>
                         </div>
@@ -524,13 +527,25 @@
                                     <input type="email" name="email" class="form-control border-0" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Your Email" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" value="{{ auth()->user()->phone ?? '' }}" placeholder="Your Mobile" style="height: 55px;">
+                                    <input type="text" name="phone" class="form-control border-0" value="{{ old('phone', auth()->user()->phone ?? '') }}" placeholder="Your Mobile" style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <select name="service" class="form-select border-0" style="height: 55px;" required>
-                                        <option value="">Select A Service</option>
+                                    <select name="service" class="form-select border-0 booking-service-select" style="height: 55px;" required>
+                                        <option data-price="0.00" value="">Select A Service</option>
                                         @foreach($services as $service)
-                                            <option value="{{ $service->id }}" @selected(old('service') == $service->id)>{{ $service->title }}</option>
+                                            <option data-price="{{ number_format($service->price, 2, '.', '') }}" value="{{ $service->id }}" @selected(old('service') == $service->id)>{{ $service->title }} - ${{ number_format($service->price, 2) }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="form-text booking-service-price text-secondary">Select a service to see the price.</div>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <input type="date" name="booking_date" class="form-control border-0" value="{{ old('booking_date') }}" style="height: 55px;" required>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <select name="time_slot" class="form-select border-0" style="height: 55px;" required>
+                                        <option value="">Select a time slot</option>
+                                        @foreach($timeSlots as $slot)
+                                            <option value="{{ $slot }}" @selected(old('time_slot') == $slot)>{{ $slot }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -658,22 +673,22 @@
 
 
     <!-- Footer Start -->
-    <div class="container-xxl py-5" id="contact">
+    <div class="container-xxl py-5" id="booking">
         <div class="container">
             <div class="text-center">
                 <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
-                <h1 class="display-5 mb-5">Contact Us</h1>
+                <h1 class="display-5 mb-5">Booking</h1>
             </div>
             <div class="row g-5">
                 <div class="col-lg-5">
-                    <h4 class="mb-3">Need help?</h4>
-                    <p class="mb-4">Send your question or project details. Admin can see every contact message from the dashboard.</p>
+                    <h4 class="mb-3">Need a service?</h4>
+                    <p class="mb-4">Send your booking request and service details. Admin can see every booking from the dashboard.</p>
                     <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA</p>
                     <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
                 </div>
                 <div class="col-lg-7">
-                    <form action="{{ route('contact.store') }}" method="POST">
+                    <form action="{{ route('createBooking') }}" method="POST">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -690,21 +705,33 @@
                                 <input type="email" name="email" class="form-control bg-light border-0" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Your Email" style="height: 55px;" required>
                             </div>
                             <div class="col-12">
-                                <select name="service_id" class="form-select bg-light border-0" style="height: 55px;">
-                                    <option value="">Select A Service</option>
+                                <select name="service" class="form-select bg-light border-0 booking-service-select" style="height: 55px;" required>
+                                    <option data-price="0.00" value="">Select A Service</option>
                                     @foreach($services as $service)
-                                        <option value="{{ $service->id }}" @selected(old('service_id') == $service->id)>{{ $service->title }}</option>
+                                        <option data-price="{{ number_format($service->price, 2, '.', '') }}" value="{{ $service->id }}" @selected(old('service') == $service->id)>{{ $service->title }} - ${{ number_format($service->price, 2) }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="form-text booking-service-price text-secondary">Select a service to see the price.</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="date" name="booking_date" class="form-control bg-light border-0" value="{{ old('booking_date') }}" style="height: 55px;" required>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <select name="time_slot" class="form-select bg-light border-0" style="height: 55px;" required>
+                                    <option value="">Select a time slot</option>
+                                    @foreach($timeSlots as $slot)
+                                        <option value="{{ $slot }}" @selected(old('time_slot') == $slot)>{{ $slot }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-12">
-                                <input type="text" name="subject" class="form-control bg-light border-0" value="{{ old('subject') }}" placeholder="Subject" style="height: 55px;" required>
+                                <input type="text" name="phone" class="form-control bg-light border-0" value="{{ old('phone', auth()->user()->phone ?? '') }}" placeholder="Phone Number" style="height: 55px;" required>
                             </div>
                             <div class="col-12">
                                 <textarea name="message" class="form-control bg-light border-0" rows="5" placeholder="Message" required>{{ old('message') }}</textarea>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                <button class="btn btn-primary w-100 py-3" type="submit">Book Now</button>
                             </div>
                         </div>
                     </form>
@@ -739,7 +766,7 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Quick Links</h5>
                     <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Booking</a>
                     <a class="btn btn-link" href="">Our Services</a>
                     <a class="btn btn-link" href="">Terms & Condition</a>
                     <a class="btn btn-link" href="">Support</a>
@@ -792,6 +819,27 @@
 
     <!-- Template Javascript -->
     <script src="{{ $siteAsset }}/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.booking-service-select').forEach(function (select) {
+                var priceLabel = select.closest('form').querySelector('.booking-service-price');
+
+                function updatePrice() {
+                    var selected = select.selectedOptions[0];
+                    var price = selected ? selected.dataset.price : '0.00';
+
+                    if (selected && selected.value !== '') {
+                        priceLabel.textContent = 'Service price: $' + parseFloat(price || 0).toFixed(2);
+                    } else {
+                        priceLabel.textContent = 'Select a service to see the price.';
+                    }
+                }
+
+                select.addEventListener('change', updatePrice);
+                updatePrice();
+            });
+        });
+    </script>
 </body>
 
 </html>
