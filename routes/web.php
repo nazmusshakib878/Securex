@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleAuthController;
 
 Route::get('/', [HomeController::class, "viewHomePage"])->name('home');
 
@@ -22,6 +23,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/signup', [AuthController::class, 'viewSignup'])->name('viewSignup');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 

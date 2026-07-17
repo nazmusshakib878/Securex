@@ -8,6 +8,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -25,11 +26,17 @@ class BookingController extends Controller
 
     public function index()
     {
-        $bookings = Auth::user()->bookings()->with('service')->latest()->paginate(10);
+        try {
+            $bookings = Auth::user()->bookings()->with('service')->latest()->paginate(10);
 
-        return view('pages.bookings', [
-            'bookings' => $bookings,
-        ]);
+            return view('pages.bookings', [
+                'bookings' => $bookings,
+            ]);
+        } catch (QueryException $e) {
+            logger()->error('Failed to load bookings for user: '.$e->getMessage());
+            Alert::error('Error', 'Unable to load your bookings at the moment. Please try again later.');
+            return redirect()->route('home');
+        }
     }
 
     public function adminIndex()
@@ -44,14 +51,32 @@ class BookingController extends Controller
     public function updateStatus(Request $request, Booking $booking)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:pending,approved,rejected,completed'],
+            'status' => ['required', 'in:accepted,rejected,completed'],
         ]);
 
-        $oldStatus = $booking->status;
-        $booking->update(['status' => $validated['status']]);
+        $currentStatus = $booking->status === 'approved' ? 'accepted' : $booking->status;
+        $newStatus = $validated['status'];
 
-        if ($oldStatus !== $validated['status'] && in_array($validated['status'], ['approved', 'rejected', 'completed'], true)) {
-            Mail::to($booking->email)->send(new BookingStatusChanged($booking, $validated['status']));
+        if (in_array($currentStatus, ['rejected', 'completed'], true)) {
+            Alert::warning('Invalid action', 'This booking cannot be updated further.');
+            return redirect()->back();
+        }
+
+        $allowedTransitions = [
+            'pending' => ['accepted', 'rejected'],
+            'accepted' => ['completed'],
+        ];
+
+        if (! isset($allowedTransitions[$currentStatus]) || ! in_array($newStatus, $allowedTransitions[$currentStatus], true)) {
+            Alert::warning('Invalid transition', 'The requested status change is not permitted.');
+            return redirect()->back();
+        }
+
+        $oldStatus = $booking->status;
+        $booking->update(['status' => $newStatus]);
+
+        if ($oldStatus !== $newStatus) {
+            Mail::to($booking->email)->send(new BookingStatusChanged($booking, $newStatus));
             Alert::success('Success', 'Booking status updated and notification email sent.');
         } else {
             Alert::success('Success', 'Booking status updated successfully.');
@@ -112,38 +137,21 @@ class BookingController extends Controller
         $bookingDate = Carbon::parse($validated['booking_date'])->toDateString();
         $requestedSlot = $validated['time_slot'];
 
-        $bookedSlots = Booking::where('service_id', $service->id)
-            ->where('booking_date', $bookingDate)
+        $bookedSlots = Booking::where('booking_date', $bookingDate)
+            ->where('status', 'accepted')
             ->pluck('time_slot')
             ->toArray();
 
         $availableSlots = array_values(array_diff(self::TIME_SLOTS, $bookedSlots));
 
-        if (empty($availableSlots)) {
-            $next = $this->findNextAvailableSlot($service->id, $bookingDate);
-            $message = "No slots are available on {$bookingDate}.";
-
-            if ($next) {
-                $message .= " Next available appointment is {$next['booking_date']} at {$next['time_slot']}.";
-            } else {
-                $message .= ' Please try a different date or contact support for assistance.';
-            }
-
-            Alert::warning('No slots available', $message);
-            return Redirect::back()->withInput();
-        }
-
         if (in_array($requestedSlot, $bookedSlots, true)) {
-            $nextSlot = $availableSlots[0];
-            $next = $this->findNextAvailableSlot($service->id, $bookingDate);
-            $message = "The chosen slot {$requestedSlot} is already booked on {$bookingDate}. Next open slot on that day is {$nextSlot}.";
+            $availableSlotList = empty($availableSlots) ? 'None' : implode(', ', $availableSlots);
 
-            if ($next && $next['booking_date'] !== $bookingDate) {
-                $message .= " If you need another day, the next available appointment is {$next['booking_date']} at {$next['time_slot']}.";
-            }
-
-            Alert::warning('Slot unavailable', $message);
-            return Redirect::back()->withInput();
+            return Redirect::back()
+                ->withErrors([
+                    'time_slot' => "This slot is already booked. Please choose another time. Available slots for this date: {$availableSlotList}",
+                ])
+                ->withInput();
         }
 
         Booking::create([
@@ -155,6 +163,7 @@ class BookingController extends Controller
             'booking_date' => $bookingDate,
             'time_slot' => $requestedSlot,
             'service_price' => $service->price,
+            'status' => 'pending',
         ]);
 
         Alert::success('Success', 'Booking submitted successfully');

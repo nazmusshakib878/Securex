@@ -23,7 +23,7 @@ class BookingStatusChanged extends Mailable
     public function build()
     {
         $subject = match ($this->status) {
-            'approved' => 'Your service booking has been accepted',
+            'accepted', 'approved' => 'Your service booking has been accepted',
             'rejected' => 'Your service booking was rejected',
             'completed' => 'Your service booking has been completed',
             default => 'Your booking status has been updated',

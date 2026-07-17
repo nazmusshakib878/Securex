@@ -289,7 +289,7 @@
                             <h4 class="mb-3">{{ $service->title }}</h4>
                             <p class="text-primary fw-bold mb-2">Price: ${{ number_format($service->price, 2) }}</p>
                             <p class="mb-4">{{ $service->description }}</p>
-                            <a class="btn" href="#quote"><i class="fa fa-arrow-right text-white me-3"></i>Book Now</a>
+                            <a class="btn js-book-service" href="#booking" data-service-id="{{ $service->id }}"><i class="fa fa-arrow-right text-white me-3"></i>Book Now</a>
                         </div>
                     </div>
                 @empty
@@ -496,75 +496,6 @@
     <!-- Projects End -->
 
 
-    <!-- Quote Start -->
-    <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0" id="quote">
-        <div class="container quote px-lg-0">
-            <div class="row g-0 mx-lg-0">
-                <div class="col-lg-6 ps-lg-0" style="min-height: 400px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute img-fluid w-100 h-100" src="{{ $siteAsset }}/img/quote.jpg" style="object-fit: cover;" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6 quote-text py-5 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="p-lg-5 pe-lg-0">
-                        <div class="bg-primary mb-3" style="width: 60px; height: 2px;"></div>
-                        <h1 class="display-5 mb-5">Free Quote</h1>
-                        <p class="mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
-                        <form action="{{ route('createBooking') }}" method="POST">
-                            @csrf
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        <div>{{ $error }}</div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" name="name" class="form-control border-0" value="{{ old('name', auth()->user()->name ?? '') }}" placeholder="Your Name" style="height: 55px;" required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="email" name="email" class="form-control border-0" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Your Email" style="height: 55px;" required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" name="phone" class="form-control border-0" value="{{ old('phone', auth()->user()->phone ?? '') }}" placeholder="Your Mobile" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name="service" class="form-select border-0 booking-service-select" style="height: 55px;" required>
-                                        <option data-price="0.00" value="">Select A Service</option>
-                                        @foreach($services as $service)
-                                            <option data-price="{{ number_format($service->price, 2, '.', '') }}" value="{{ $service->id }}" @selected(old('service') == $service->id)>{{ $service->title }} - ${{ number_format($service->price, 2) }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="form-text booking-service-price text-secondary">Select a service to see the price.</div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <input type="date" name="booking_date" class="form-control border-0" value="{{ old('booking_date') }}" style="height: 55px;" required>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <select name="time_slot" class="form-select border-0" style="height: 55px;" required>
-                                        <option value="">Select a time slot</option>
-                                        @foreach($timeSlots as $slot)
-                                            <option value="{{ $slot }}" @selected(old('time_slot') == $slot)>{{ $slot }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <textarea name="message" class="form-control border-0" placeholder="Special Note">{{ old('message') }}</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Get A Free Quote</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Quote End -->
-
-
     <!-- Team Start -->
     <div class="container-xxl py-5" id="team">
         <div class="container">
@@ -705,7 +636,7 @@
                                 <input type="email" name="email" class="form-control bg-light border-0" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Your Email" style="height: 55px;" required>
                             </div>
                             <div class="col-12">
-                                <select name="service" class="form-select bg-light border-0 booking-service-select" style="height: 55px;" required>
+                                <select id="booking-service-select" name="service" class="form-select bg-light border-0 booking-service-select" style="height: 55px;" required>
                                     <option data-price="0.00" value="">Select A Service</option>
                                     @foreach($services as $service)
                                         <option data-price="{{ number_format($service->price, 2, '.', '') }}" value="{{ $service->id }}" @selected(old('service') == $service->id)>{{ $service->title }} - ${{ number_format($service->price, 2) }}</option>
@@ -837,6 +768,19 @@
 
                 select.addEventListener('change', updatePrice);
                 updatePrice();
+            });
+
+            document.querySelectorAll('.js-book-service').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var serviceSelect = document.getElementById('booking-service-select');
+
+                    if (! serviceSelect) {
+                        return;
+                    }
+
+                    serviceSelect.value = this.dataset.serviceId;
+                    serviceSelect.dispatchEvent(new Event('change'));
+                });
             });
         });
     </script>

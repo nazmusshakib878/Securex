@@ -19,11 +19,11 @@
                         <td style="padding: 24px; color: #333333;">
                             <p>Hi {{ $booking->name }},</p>
 
-                            @if($status === 'approved')
+                            @if($status === 'accepted' || $status === 'approved')
                                 <p>Good news! Your booking request has been accepted.</p>
                                 <p>We have scheduled the service for <strong>{{ optional($booking->booking_date)->format('M d, Y') ?? '-' }}</strong> at <strong>{{ $booking->time_slot ?? '-' }}</strong>.</p>
                             @elseif($status === 'rejected')
-                                <p>We are sorry to inform you that your booking request could not be approved.</p>
+                                <p>We are sorry to inform you that your booking request could not be accepted.</p>
                                 <p>Please contact support if you would like to request another service or change your booking details.</p>
                             @elseif($status === 'completed')
                                 <p>Your requested service has been completed successfully.</p>

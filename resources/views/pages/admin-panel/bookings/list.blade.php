@@ -30,6 +30,10 @@
                 <tbody>
                     @forelse($bookings as $booking)
                         <tr>
+                            @php
+                                $displayStatus = $booking->status === 'approved' ? 'accepted' : $booking->status;
+                                $statusBadge = $booking->status === 'pending' ? 'warning text-dark' : ($booking->status === 'approved' || $booking->status === 'accepted' ? 'success' : ($booking->status === 'rejected' ? 'danger' : ($booking->status === 'completed' ? 'info text-dark' : 'secondary')));
+                            @endphp
                             <td>{{ $booking->id }}</td>
                             <td>{{ $booking->user->name ?? $booking->name }}</td>
                             <td>{{ $booking->service->title ?? 'N/A' }}</td>
@@ -38,32 +42,32 @@
                             <td>{{ $booking->time_slot ?? '-' }}</td>
                             <td>{{ $booking->email }}</td>
                             <td>
-                                <span class="badge bg-{{ $booking->status === 'pending' ? 'warning text-dark' : ($booking->status === 'approved' ? 'success' : ($booking->status === 'rejected' ? 'danger' : ($booking->status === 'completed' ? 'info text-dark' : 'secondary'))) }}">
-                                    {{ ucfirst($booking->status) }}
+                                <span class="badge bg-{{ $statusBadge }}">
+                                    {{ ucfirst($displayStatus) }}
                                 </span>
                             </td>
                             <td>{{ $booking->created_at->format('M d, Y') }}</td>
                             <td>
-                                <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="d-inline-flex gap-1">
-                                    @csrf
-                                    <input type="hidden" name="status" value="approved">
-                                    <button type="submit" class="btn btn-sm btn-success">Accept</button>
-                                </form>
-                                <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="d-inline-flex gap-1">
-                                    @csrf
-                                    <input type="hidden" name="status" value="rejected">
-                                    <button type="submit" class="btn btn-sm btn-danger">Reject</button>
-                                </form>
-                                <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="d-inline-flex gap-1">
-                                    @csrf
-                                    <input type="hidden" name="status" value="completed">
-                                    <button type="submit" class="btn btn-sm btn-warning text-dark">Completed</button>
-                                </form>
-                                <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="d-inline-flex gap-1">
-                                    @csrf
-                                    <input type="hidden" name="status" value="pending">
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Pending</button>
-                                </form>
+                                <div class="booking-actions">
+                                    @if($displayStatus === 'pending')
+                                        <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="action-form">
+                                            @csrf
+                                            <input type="hidden" name="status" value="accepted">
+                                            <button type="submit" class="btn btn-sm btn-success">Accept</button>
+                                        </form>
+                                        <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="action-form">
+                                            @csrf
+                                            <input type="hidden" name="status" value="rejected">
+                                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                                        </form>
+                                    @elseif(in_array($displayStatus, ['accepted'], true))
+                                        <form action="{{ route('admin.bookings.status', $booking) }}" method="POST" class="action-form">
+                                            @csrf
+                                            <input type="hidden" name="status" value="completed">
+                                            <button type="submit" class="btn btn-sm btn-warning text-dark">Complete</button>
+                                        </form>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty

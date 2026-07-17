@@ -257,6 +257,22 @@
             border-color: var(--admin-primary);
         }
 
+        .booking-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            align-items: center;
+        }
+
+        .booking-actions .action-form {
+            display: inline-flex;
+            min-width: 0;
+        }
+
+        .booking-actions .btn {
+            white-space: nowrap;
+        }
+
         .object-fit-cover {
             object-fit: cover;
         }

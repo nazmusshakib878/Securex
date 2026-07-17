@@ -1,4 +1,6 @@
-@php($siteAsset = asset('site'))
+@php
+    $siteAsset = asset('site');
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,14 +97,18 @@
                     <tbody>
                         @forelse($bookings as $booking)
                             <tr>
+                                @php
+                                    $displayStatus = $booking->status === 'approved' ? 'accepted' : $booking->status;
+                                    $statusBadge = $booking->status === 'pending' ? 'warning text-dark' : ($booking->status === 'approved' || $booking->status === 'accepted' ? 'success' : ($booking->status === 'rejected' ? 'danger' : ($booking->status === 'completed' ? 'info text-dark' : 'secondary')));
+                                @endphp
                                 <td>{{ $booking->id }}</td>
                                 <td>{{ $booking->service->title ?? 'N/A' }}</td>
                                 <td>${{ number_format($booking->service_price, 2) }}</td>
                                 <td>{{ optional($booking->booking_date)->format('M d, Y') ?? '-' }}</td>
                                 <td>{{ $booking->time_slot ?? '-' }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $booking->status === 'pending' ? 'warning text-dark' : ($booking->status === 'approved' ? 'success' : ($booking->status === 'rejected' ? 'danger' : ($booking->status === 'completed' ? 'info text-dark' : 'secondary'))) }}">
-                                        {{ ucfirst($booking->status) }}
+                                    <span class="badge bg-{{ $statusBadge }}">
+                                        {{ ucfirst($displayStatus) }}
                                     </span>
                                 </td>
                                 <td>{{ Illuminate\Support\Str::limit($booking->message ?? '-', 80) }}</td>
