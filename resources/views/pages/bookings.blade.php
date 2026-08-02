@@ -62,7 +62,10 @@
                     @else
                         <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('user.bookings') }}">My Bookings</a>
                     @endif
-                    <a class="btn btn-outline-danger rounded-pill py-2 px-4" href="{{ route('logout') }}">Logout</a>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-outline-danger rounded-pill py-2 px-4" type="submit">Logout</button>
+                    </form>
                 @else
                     <a class="btn btn-outline-primary rounded-pill py-2 px-4" href="{{ route('login') }}">Login</a>
                     <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('viewSignup') }}">Sign Up</a>

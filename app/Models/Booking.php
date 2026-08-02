@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'name', 'email', 'service_id', 'user_id', 'message',
+        'booking_date', 'time_slot', 'service_price', 'status',
+    ];
 
     protected $casts = [
         'booking_date' => 'date',

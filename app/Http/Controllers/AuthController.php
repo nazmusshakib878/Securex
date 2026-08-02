@@ -85,7 +85,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->isAdmin == 0){
-                Alert::success('Success', 'User Login Successful');
+                Alert::success('Welcome back!', 'You have logged in successfully.')
+                    ->toast('Welcome back!', 'success')
+                    ->position('top-end')
+                    ->autoClose(2200)
+                    ->timerProgressBar();
 
                 return redirect()->route('home');
             }else{

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'title', 'image_url', 'description', 'price', 'isActive',
+    ];
 
     protected $casts = [
         'price' => 'decimal:2',

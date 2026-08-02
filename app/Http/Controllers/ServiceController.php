@@ -62,8 +62,14 @@ class ServiceController extends Controller
         return redirect()->route("viewServiceList");
     }
 
-    public function deleteService($id){
-        Service::findOrFail($id)->delete();
+    public function deleteService(Service $service){
+        if ($service->bookings()->exists()) {
+            Alert::error('Error', 'This service cannot be deleted while it has bookings.');
+
+            return redirect()->back();
+        }
+
+        $service->delete();
 
         Alert::success('Success', 'Service deleted Successfully');
 

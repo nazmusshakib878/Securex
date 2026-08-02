@@ -28,7 +28,10 @@
                     @else
                         <a href="{{ route('user.bookings') }}" class="btn btn-primary py-2 px-4 ms-3">My Bookings</a>
                     @endif
-                    <a href="{{ route('logout') }}" class="btn btn-danger py-2 px-4 ms-3">Logout</a>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline ms-3">
+                        @csrf
+                        <button type="submit" class="btn btn-danger py-2 px-4">Logout</button>
+                    </form>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4 ms-3">Login</a>
                     <a href="{{ route('viewSignup') }}" class="btn btn-outline-primary py-2 px-4 ms-3">Sign Up</a>

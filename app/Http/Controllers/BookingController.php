@@ -73,7 +73,34 @@ class BookingController extends Controller
         }
 
         $oldStatus = $booking->status;
-        $booking->update(['status' => $newStatus]);
+
+        $updated = app('db')->transaction(function () use ($booking, $newStatus): bool {
+            $lockedBooking = Booking::query()->lockForUpdate()->findOrFail($booking->id);
+
+            if ($newStatus === 'accepted') {
+                $conflictingBooking = Booking::query()
+                    ->whereKeyNot($lockedBooking->id)
+                    ->where('booking_date', $lockedBooking->booking_date)
+                    ->where('time_slot', $lockedBooking->time_slot)
+                    ->whereIn('status', ['accepted', 'approved'])
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($conflictingBooking) {
+                    return false;
+                }
+            }
+
+            $lockedBooking->update(['status' => $newStatus]);
+
+            return true;
+        });
+
+        if (! $updated) {
+            Alert::error('Slot unavailable', 'Another booking already occupies this date and time slot.');
+
+            return redirect()->back();
+        }
 
         if ($oldStatus !== $newStatus) {
             Mail::to($booking->email)->send(new BookingStatusChanged($booking, $newStatus));
@@ -106,8 +133,8 @@ class BookingController extends Controller
             return redirect()->back();
         }
 
-        if ($booking->status === 'canceled') {
-            Alert::info('Notice', 'This booking is already canceled.');
+        if (! in_array($booking->status, ['pending', 'accepted', 'approved'], true)) {
+            Alert::info('Notice', 'This booking can no longer be canceled.');
             return redirect()->back();
         }
 

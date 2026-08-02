@@ -89,7 +89,10 @@
                     <a href="{{ route('home') }}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                     @auth
-                        <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-modern ms-lg-3 px-4">Logout</a>
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline ms-lg-3">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-modern px-4">Logout</button>
+                        </form>
                     @else
                         <a href="{{ route('login') }}" class="nav-item nav-link me-lg-2">Login</a>
                         <a href="{{ route('viewSignup') }}" class="btn btn-primary btn-modern ms-lg-2 text-white">Sign Up</a>

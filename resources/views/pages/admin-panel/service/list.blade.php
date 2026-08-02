@@ -39,7 +39,11 @@
                         <td>
                             <div class="d-flex gap-2">
                                 <a href="{{route("viewServiceEditForm", $service->id)}}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil me-1"></i>Edit</a>
-                                <a href="{{route("deleteService", $service->id)}}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this service?')"><i class="bi bi-trash me-1"></i>Delete</a>
+                                <form action="{{ route('deleteService', $service) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this service?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-1"></i>Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

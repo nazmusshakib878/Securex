@@ -19,7 +19,7 @@ Route::get('/login', function () {
     return view('pages.login');
 })->name('login');
 Route::post('/login', [AuthController::class, 'loginCheck'])->name('loginCheck');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::get('/signup', [AuthController::class, 'viewSignup'])->name('viewSignup');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
@@ -34,7 +34,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin-panel')->group(function () {
     Route::post('/add-service', [ServiceController::class, 'storeService'])->name('storeService');
     Route::get('/service-list', [ServiceController::class, 'viewServiceList'])->name('viewServiceList');
     Route::get('/edit-service/{id}', [ServiceController::class, 'viewServiceEditForm'])->name('viewServiceEditForm');
-    Route::get('/delete-service/{id}', [ServiceController::class, 'deleteService'])->name('deleteService');
+    Route::delete('/services/{service}', [ServiceController::class, 'deleteService'])->name('deleteService');
     Route::post('/edit-service', [ServiceController::class, 'editService'])->name('editService');
     Route::get('/bookings', [BookingController::class, 'adminIndex'])->name('admin.bookings');
     Route::post('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('admin.bookings.status');
