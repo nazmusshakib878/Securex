@@ -138,6 +138,14 @@
         </div>
         
         <div class="auth-body">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">{{ session('status') }}</div>
+            @endif
+
+            @if (session('csrf_error'))
+                <div class="alert alert-warning" role="alert">{{ session('csrf_error') }}</div>
+            @endif
+
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul class="mb-0 ps-3">
@@ -175,6 +183,7 @@
                         <input type="checkbox" class="form-check-input" id="remember" name="remember">
                         <label class="form-check-label text-muted" for="remember">Remember me</label>
                     </div>
+                    <a href="{{ route('password.request') }}" class="text-decoration-none fw-semibold">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-auth w-100 mb-3">Sign In</button>
