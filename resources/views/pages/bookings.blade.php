@@ -55,7 +55,7 @@
                 </div>
                 <a href="{{ route('home') }}#booking" class="nav-item nav-link">Booking</a>
             </div>
-            <div class="h-100 d-lg-inline-flex align-items-center gap-2">
+            <div class="my-3 my-lg-0 d-flex flex-wrap align-items-center gap-2">
                 @auth
                     @if(Auth::user()->isAdmin)
                         <a class="btn btn-primary rounded-pill py-2 px-4" href="{{ route('viewAdminPanel') }}">Dashboard</a>

@@ -189,6 +189,17 @@ html {
         font-size: 30px;
         font-weight: 600;
     }
+
+    .header-carousel .owl-nav {
+        padding: 0 10px;
+    }
+
+    .header-carousel .owl-nav .owl-prev,
+    .header-carousel .owl-nav .owl-next {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
 }
 
 .header-carousel .owl-nav {
@@ -336,6 +347,12 @@ html {
     .service-item .btn {
         width: 140px !important;
         padding-right: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-item {
+        padding: 1.75rem !important;
     }
 }
 

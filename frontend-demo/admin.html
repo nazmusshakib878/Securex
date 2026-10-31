@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard - SecureX (Demo)</title>
+    <link href="favicon.ico" rel="icon">
+    <link href="site/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --admin-bg: #f3f6fb;
+            --admin-panel: #ffffff;
+            --admin-ink: #172033;
+            --admin-muted: #687386;
+            --admin-line: #e5eaf2;
+            --admin-primary: #1d4ed8;
+            --admin-sidebar: #111827;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--admin-bg);
+            color: var(--admin-ink);
+            margin: 0;
+            padding: 0;
+        }
+
+        .demo-ribbon {
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            font-size: 0.82rem;
+            padding: 0.45rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+
+        #sidebarMenu {
+            width: 280px;
+            min-height: 100vh;
+            transition: transform .25s ease;
+            background: linear-gradient(180deg, #0f172a 0%, #172033 58%, #111827 100%);
+            box-shadow: 16px 0 40px rgba(15, 23, 42, .12);
+        }
+
+        .sidebar-menu-label {
+            color: rgba(255, 255, 255, .45);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            margin: 1rem 0 .55rem;
+            text-transform: uppercase;
+        }
+
+        .sidebar-quick-card {
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 8px;
+            margin-bottom: 1.1rem;
+            padding: .9rem;
+        }
+
+        .sidebar-quick-card span {
+            color: #7dd3fc;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            margin-bottom: .25rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .sidebar-quick-card strong {
+            color: #fff;
+            font-size: .92rem;
+            display: block;
+        }
+
+        .admin-sidebar-nav {
+            gap: .3rem;
+        }
+
+        #sidebarMenu .nav-link {
+            color: rgba(255, 255, 255, .76);
+            border: 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            margin-bottom: 0;
+            min-height: 46px;
+            padding: .55rem .65rem;
+            position: relative;
+            transition: all .2s ease;
+            text-decoration: none;
+        }
+
+        #sidebarMenu .nav-link.active,
+        #sidebarMenu .nav-link:hover {
+            color: #fff;
+            background: rgba(125, 211, 252, .1);
+        }
+
+        #sidebarMenu .nav-link.active {
+            background: linear-gradient(90deg, rgba(14, 165, 233, .22), rgba(255, 255, 255, .08));
+            color: #fff;
+            box-shadow: inset 0 0 0 1px rgba(125, 211, 252, .18);
+        }
+
+        #sidebarMenu .nav-link.active::before {
+            content: "";
+            position: absolute;
+            inset: .55rem auto .55rem 0;
+            width: 3px;
+            border-radius: 0 999px 999px 0;
+            background: #38bdf8;
+        }
+
+        #sidebarMenu .nav-index {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            background: rgba(15, 23, 42, .5);
+            color: rgba(255, 255, 255, .58);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            font-size: .72rem;
+            font-weight: 800;
+        }
+
+        #sidebarMenu .nav-link.active .nav-index {
+            background: #38bdf8;
+            color: #082f49;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #2563eb;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, .32);
+        }
+
+        .content-wrapper {
+            flex: 1;
+            transition: margin .25s ease;
+            min-width: 0;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            z-index: 1040;
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebarMenu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1050;
+                transform: translateX(-100%);
+                min-height: 100vh;
+            }
+
+            #sidebarMenu.show {
+                transform: translateX(0);
+            }
+
+            .sidebar-backdrop.show {
+                display: block;
+            }
+        }
+
+        .admin-topbar {
+            background: rgba(255, 255, 255, .92);
+            border-bottom: 1px solid var(--admin-line);
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-page {
+            padding: 1.5rem;
+        }
+
+        @media (max-width: 767.98px) {
+            .admin-page {
+                padding: 0.85rem;
+            }
+        }
+
+        .page-header-kicker {
+            color: var(--admin-primary);
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            margin-bottom: .25rem;
+            text-transform: uppercase;
+        }
+
+        .ops-dashboard {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .ops-titlebar {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .ops-title-actions {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+        }
+
+        .ops-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .ops-main,
+        .ops-side {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .ops-summary {
+            background: #102a43;
+            border-radius: 12px;
+            color: #fff;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 1rem;
+            align-items: end;
+            padding: 1.5rem;
+            box-shadow: 0 18px 38px rgba(16, 42, 67, .18);
+        }
+
+        .ops-summary-copy span {
+            color: #7dd3fc;
+            display: block;
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            margin-bottom: .5rem;
+            text-transform: uppercase;
+        }
+
+        .ops-summary-copy h3 {
+            color: #ffffff !important;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: .45rem;
+        }
+
+        .ops-summary-copy p {
+            color: rgba(255, 255, 255, .85) !important;
+            margin-bottom: 0;
+            max-width: 620px;
+        }
+
+        .ops-summary-actions a {
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .26);
+            border-radius: 8px;
+            color: #fff !important;
+            font-size: .9rem;
+            font-weight: 700;
+            padding: .65rem 1.1rem;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-block;
+            transition: all .2s ease;
+        }
+
+        .ops-summary-actions a:hover {
+            background: #fff;
+            color: #102a43 !important;
+        }
+
+        .ops-section-card {
+            background: #fff;
+            border: 1px solid var(--admin-line);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, .04);
+        }
+
+        .ops-section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ops-table {
+            display: grid;
+            gap: .65rem;
+        }
+
+        .ops-table-row {
+            border: 1px solid var(--admin-line);
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: minmax(200px, 1.3fr) minmax(120px, .8fr) auto minmax(90px, auto);
+            gap: .85rem;
+            align-items: center;
+            padding: .85rem;
+            background: #fff;
+            transition: all .2s ease;
+        }
+
+        .ops-table-row:hover {
+            background: #f8fafc;
+        }
+
+        .ops-person {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            min-width: 0;
+        }
+
+        .ops-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .ops-stat-panel {
+            background: #fff;
+            border: 1px solid var(--admin-line);
+            border-radius: 12px;
+            display: grid;
+            gap: .2rem;
+            padding: .8rem;
+        }
+
+        .ops-stat-item {
+            border-bottom: 1px solid var(--admin-line);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: .35rem .85rem;
+            align-items: center;
+            padding: .85rem .4rem;
+        }
+
+        .ops-stat-item:last-child {
+            border-bottom: 0;
+        }
+
+        .ops-stat-item span {
+            color: var(--admin-muted);
+            font-size: .85rem;
+        }
+
+        .ops-stat-item strong {
+            font-size: 1.4rem;
+            font-weight: 800;
+            grid-column: 1;
+        }
+
+        .ops-stat-item i {
+            color: var(--admin-primary);
+            font-size: 1.4rem;
+            grid-column: 2;
+            grid-row: 1 / span 2;
+        }
+
+        .ops-message-list {
+            display: grid;
+            gap: .65rem;
+        }
+
+        .ops-message {
+            background: #f8fafc;
+            border-left: 3px solid #0f766e;
+            border-radius: 8px;
+            padding: .8rem .9rem;
+        }
+
+        .ops-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .7rem;
+            padding: .8rem;
+            background: #fff;
+            border: 1px solid var(--admin-line);
+            border-radius: 12px;
+        }
+
+        .ops-shortcuts a {
+            align-items: center;
+            background: #f8fafc;
+            border-radius: 8px;
+            color: var(--admin-ink);
+            display: flex;
+            gap: .55rem;
+            justify-content: center;
+            padding: .8rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .ops-shortcuts a:hover {
+            color: var(--admin-primary);
+            background: #e0f2fe;
+        }
+
+        @media (max-width: 1199.98px) {
+            .ops-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .ops-titlebar,
+            .ops-summary {
+                grid-template-columns: 1fr;
+            }
+            .ops-titlebar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .ops-table-row {
+                grid-template-columns: 1fr auto;
+                row-gap: 0.5rem;
+            }
+            .ops-person {
+                grid-column: 1 / -1;
+            }
+            .ops-service {
+                grid-column: 1 / -1;
+                font-size: 0.85rem;
+                color: var(--admin-muted);
+            }
+            .ops-table-row .badge {
+                justify-self: start;
+            }
+            .ops-table-row small {
+                justify-self: end;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-ribbon">
+        <span class="badge bg-primary me-2">DEMO MODE</span>
+        <strong>SecureX Admin Workspace Preview</strong> &mdash; Interactive control room demonstration.
+        <a href="index.html" class="text-info ms-2">&larr; Back to Home</a>
+    </div>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="d-flex">
+        <!-- Sidebar Start -->
+        <nav id="sidebarMenu" class="text-white p-3 d-flex flex-column">
+            <div class="d-flex align-items-center mb-4">
+                <div class="brand-mark me-3">
+                    <i class="bi bi-shield-check text-white fs-5"></i>
+                </div>
+                <div>
+                    <div class="fs-5 fw-bold">Securex</div>
+                    <small class="text-white-50">Control center</small>
+                </div>
+                <button class="btn btn-sm btn-outline-light ms-auto d-lg-none" id="sidebarCloseBtn" type="button">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <p class="text-white-50 small mb-3">Manage users, services, bookings and website messages.</p>
+            <div class="sidebar-quick-card">
+                <span>Workspace</span>
+                <strong>Security Service Admin</strong>
+            </div>
+
+            <div class="sidebar-menu-label">Overview</div>
+            <ul class="nav nav-pills flex-column admin-sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="admin.html">
+                        <span class="nav-index">01</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-menu-label">Services</div>
+            <ul class="nav nav-pills flex-column admin-sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html#services">
+                        <span class="nav-index">02</span>
+                        <span>Service List</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" onclick="demoAction('Add Service Form')">
+                        <span class="nav-index">03</span>
+                        <span>Add Service</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-menu-label">Operations</div>
+            <ul class="nav nav-pills flex-column mb-4 admin-sidebar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" onclick="demoAction('Users Management')">
+                        <span class="nav-index">04</span>
+                        <span>Users (7)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bookings.html">
+                        <span class="nav-index">05</span>
+                        <span>Booking Requests</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" onclick="demoAction('Visitor Messages')">
+                        <span class="nav-index">06</span>
+                        <span>Messages (5)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link nav-link-logout border-0 bg-transparent w-100 mt-2 text-danger">
+                        <span class="nav-index text-danger"><i class="bi bi-box-arrow-right"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mt-auto pt-3 border-top border-secondary">
+                <div class="d-flex align-items-center">
+                    <div class="me-3 bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width:42px;height:42px;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold">Admin User</div>
+                        <small class="text-white-50">Administrator</small>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Sidebar End -->
+
+        <div class="content-wrapper w-100">
+            <header class="admin-topbar py-3 px-3 px-md-4 d-flex align-items-center justify-content-between sticky-top">
+                <div class="d-flex align-items-center gap-2 gap-md-3">
+                    <button class="btn btn-outline-secondary d-lg-none py-1 px-2" id="sidebarToggleBtn" type="button">
+                        <i class="bi bi-list fs-5"></i>
+                    </button>
+                    <div>
+                        <div class="page-header-kicker d-none d-sm-block">Securex Admin</div>
+                        <h1 class="h5 mb-0">Dashboard</h1>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" href="index.html">
+                        <i class="bi bi-globe"></i> <span class="d-none d-sm-inline">View Site</span>
+                    </a>
+                    <a class="btn btn-primary btn-sm d-flex align-items-center gap-1" href="javascript:void(0)" onclick="demoAction('Add Service')">
+                        <i class="bi bi-plus-lg"></i> <span class="d-none d-sm-inline">Add Service</span>
+                    </a>
+                </div>
+            </header>
+
+            <div class="admin-page">
+                <main class="ops-dashboard">
+                    <div class="ops-titlebar">
+                        <div>
+                            <div class="page-header-kicker">Admin Workspace</div>
+                            <h2 class="h3 mb-1">Securex Control Room</h2>
+                            <p class="text-muted mb-0">Real-time status of security bookings, active technician dispatch, and client inquiries.</p>
+                        </div>
+                        <div class="ops-title-actions">
+                            <button class="btn btn-primary btn-sm" onclick="demoAction('Add New Service')">
+                                <i class="bi bi-plus-lg me-1"></i>Add Service
+                            </button>
+                            <a href="bookings.html" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-calendar-check me-1"></i>Bookings (13)
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ops-layout">
+                        <section class="ops-main">
+                            <div class="ops-summary">
+                                <div class="ops-summary-copy">
+                                    <span>Today Focus</span>
+                                    <h3>4 booking requests need review</h3>
+                                    <p>Keep new requests moving and check visitor messages before updating service listings.</p>
+                                </div>
+                                <div class="ops-summary-actions">
+                                    <a href="bookings.html"><i class="bi bi-calendar-check me-1"></i>Review Bookings</a>
+                                </div>
+                            </div>
+
+                            <div class="ops-section-card">
+                                <div class="ops-section-head">
+                                    <div>
+                                        <div class="page-header-kicker">Bookings</div>
+                                        <h5 class="mb-0">Latest Requests</h5>
+                                    </div>
+                                    <a href="bookings.html" class="text-decoration-none fw-semibold small text-primary">13 total &rarr;</a>
+                                </div>
+
+                                <div class="ops-table">
+                                    <div class="ops-table-row">
+                                        <div class="ops-person">
+                                            <div class="ops-avatar">A</div>
+                                            <div>
+                                                <strong>Admin User</strong>
+                                                <small class="d-block text-muted">admin@example.com</small>
+                                            </div>
+                                        </div>
+                                        <div class="ops-service text-dark">Finger Print Access</div>
+                                        <span class="badge bg-success text-white">Accepted</span>
+                                        <small class="text-muted text-end">Oct 31, 2026</small>
+                                    </div>
+
+                                    <div class="ops-table-row">
+                                        <div class="ops-person">
+                                            <div class="ops-avatar" style="background:#fef3c7;color:#b45309;">T</div>
+                                            <div>
+                                                <strong>Test User</strong>
+                                                <small class="d-block text-muted">test@example.com</small>
+                                            </div>
+                                        </div>
+                                        <div class="ops-service text-dark">Commercial CCTV System</div>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <small class="text-muted text-end">Oct 31, 2026</small>
+                                    </div>
+
+                                    <div class="ops-table-row">
+                                        <div class="ops-person">
+                                            <div class="ops-avatar" style="background:#fef3c7;color:#b45309;">N</div>
+                                            <div>
+                                                <strong>Nazmus Sakib</strong>
+                                                <small class="d-block text-muted">sakib@example.com</small>
+                                            </div>
+                                        </div>
+                                        <div class="ops-service text-dark">Finger Print Access</div>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <small class="text-muted text-end">Oct 31, 2026</small>
+                                    </div>
+
+                                    <div class="ops-table-row">
+                                        <div class="ops-person">
+                                            <div class="ops-avatar" style="background:#fef3c7;color:#b45309;">T</div>
+                                            <div>
+                                                <strong>Tahsin Ahmed</strong>
+                                                <small class="d-block text-muted">tahsin@example.com</small>
+                                            </div>
+                                        </div>
+                                        <div class="ops-service text-dark">Smart Home Security</div>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <small class="text-muted text-end">Oct 31, 2026</small>
+                                    </div>
+
+                                    <div class="ops-table-row">
+                                        <div class="ops-person">
+                                            <div class="ops-avatar" style="background:#fef3c7;color:#b45309;">C</div>
+                                            <div>
+                                                <strong>City Bank Operations</strong>
+                                                <small class="d-block text-muted">corporate@bankbd.com</small>
+                                            </div>
+                                        </div>
+                                        <div class="ops-service text-dark">24/7 Central Alarm Monitoring</div>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <small class="text-muted text-end">Oct 31, 2026</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <aside class="ops-side">
+                            <div class="ops-stat-panel">
+                                <div class="ops-stat-item">
+                                    <span>Total Users</span>
+                                    <strong>7</strong>
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ops-stat-item">
+                                    <span>Active Services</span>
+                                    <strong>8</strong>
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div class="ops-stat-item">
+                                    <span>Messages</span>
+                                    <strong>5</strong>
+                                    <i class="bi bi-envelope"></i>
+                                </div>
+                            </div>
+
+                            <div class="ops-section-card">
+                                <div class="ops-section-head">
+                                    <div>
+                                        <div class="page-header-kicker">Inbox</div>
+                                        <h5 class="mb-0">Recent Messages</h5>
+                                    </div>
+                                    <a href="javascript:void(0)" onclick="demoAction('Messages Inbox')">View All</a>
+                                </div>
+
+                                <div class="ops-message-list">
+                                    <div class="ops-message">
+                                        <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                            <strong class="text-dark">Rahim Chowdhury</strong>
+                                            <small class="text-muted">30m ago</small>
+                                        </div>
+                                        <div class="small text-primary fw-semibold mb-1">Commercial CCTV &bull; <span class="text-muted">01755123456</span></div>
+                                        <span class="text-muted small">Need quote for 16-channel 4K NVR and camera setup in Uttara office.</span>
+                                    </div>
+
+                                    <div class="ops-message">
+                                        <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                            <strong class="text-dark">Farhana Yasmin</strong>
+                                            <small class="text-muted">30m ago</small>
+                                        </div>
+                                        <div class="small text-primary fw-semibold mb-1">Fire Detection &bull; <span class="text-muted">01822987654</span></div>
+                                        <span class="text-muted small">Inquiring about fire sprinkler inspection certificate.</span>
+                                    </div>
+
+                                    <div class="ops-message">
+                                        <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                            <strong class="text-dark">Kamrul Hasan</strong>
+                                            <small class="text-muted">30m ago</small>
+                                        </div>
+                                        <div class="small text-primary fw-semibold mb-1">Biometric Attendance &bull; <span class="text-muted">01933456789</span></div>
+                                        <span class="text-muted small">Need biometric facial recognition turnstiles for 150 employees.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ops-shortcuts">
+                                <a href="javascript:void(0)" onclick="demoAction('Users List')"><i class="bi bi-people text-primary"></i>Users</a>
+                                <a href="index.html#services"><i class="bi bi-card-list text-primary"></i>Services</a>
+                                <a href="bookings.html"><i class="bi bi-calendar-check text-primary"></i>Bookings</a>
+                                <a href="javascript:void(0)" onclick="demoAction('Contact Messages')"><i class="bi bi-envelope text-primary"></i>Messages</a>
+                            </div>
+                        </aside>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Notice Toast / Modal -->
+    <div class="modal fade" id="demoActionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="demoModalTitle"><i class="bi bi-shield-check me-2"></i>Admin Action Demo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <i class="bi bi-gear-wide-connected text-primary display-5 mb-3 d-block"></i>
+                    <h5 class="fw-bold mb-2" id="demoModalHeading">Feature Preview</h5>
+                    <p class="text-muted small mb-3" id="demoModalBody">In the full Laravel application, this executes database transactions, status audits, and email notifications.</p>
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        function openSidebar() {
+            if (sidebarMenu) sidebarMenu.classList.add('show');
+            if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
+        }
+
+        function closeSidebar() {
+            if (sidebarMenu) sidebarMenu.classList.remove('show');
+            if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+        }
+
+        if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', openSidebar);
+        if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+        if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+        function demoAction(featureName) {
+            document.getElementById('demoModalHeading').innerText = featureName;
+            document.getElementById('demoModalBody').innerText = 'You tapped "' + featureName + '". In the production Laravel system, this performs authenticated database operations with role verification.';
+            var modal = new bootstrap.Modal(document.getElementById('demoActionModal'));
+            modal.show();
+        }
+    </script>
+</body>
+
+</html>

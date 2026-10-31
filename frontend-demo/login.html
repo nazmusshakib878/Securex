@@ -185,8 +185,29 @@
             </div>
             
             <div class="auth-body">
-                <div class="alert alert-info py-2 px-3 small mb-3 border-0">
-                    <i class="bi bi-shield-lock me-1"></i> <strong>Live Demo:</strong> In the production Laravel system, credentials verify with Bcrypt against the database.
+                <!-- Quick Demo Credentials Box -->
+                <div class="card bg-light border-0 mb-4 p-3 rounded-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-key-fill text-primary me-2"></i>
+                        <strong class="text-dark small">Tap to Auto-Fill Credentials</strong>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-primary btn-sm w-100 text-start py-2 px-2" onclick="fillDemo('admin@example.com', 'password', 'admin')">
+                                <span class="d-block fw-bold" style="font-size:0.8rem;">🛡️ Admin</span>
+                                <span class="text-muted d-block text-truncate" style="font-size:0.72rem;">admin@example.com</span>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-secondary btn-sm w-100 text-start py-2 px-2" onclick="fillDemo('test@example.com', 'password', 'client')">
+                                <span class="d-block fw-bold" style="font-size:0.8rem;">👤 Client</span>
+                                <span class="text-muted d-block text-truncate" style="font-size:0.72rem;">test@example.com</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-muted text-center mt-2" style="font-size:0.72rem;">
+                        Password: <code class="text-primary fw-bold">password</code> (Works on mobile & online)
+                    </div>
                 </div>
 
                 <form id="loginDemoForm">
@@ -235,9 +256,12 @@
                 </div>
                 <div class="modal-body p-4 text-center">
                     <i class="bi bi-person-check text-success display-5 mb-3 d-block"></i>
-                    <h5 class="fw-bold mb-2">Simulated Login Successful!</h5>
-                    <p class="text-muted small mb-3">You are previewing the frontend demo. In the full Laravel production app, this authenticates the user, generates session cookies, and grants access to role-protected customer/admin workspaces.</p>
-                    <a href="bookings.html" class="btn btn-primary w-100">Proceed to Customer Bookings &rarr;</a>
+                    <h5 class="fw-bold mb-2" id="modalWelcome">Simulated Login Successful!</h5>
+                    <p class="text-muted small mb-3">You are previewing the SecureX demo. Select which dashboard workspace you would like to view:</p>
+                    <div class="d-grid gap-2">
+                        <a href="admin.html" id="modalAdminLink" class="btn btn-primary"><i class="bi bi-shield-lock me-1"></i> Open Admin Control Room &rarr;</a>
+                        <a href="bookings.html" id="modalClientLink" class="btn btn-outline-secondary"><i class="bi bi-person me-1"></i> Open Customer Bookings Portal &rarr;</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,15 +270,42 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        var currentRole = 'admin';
+
+        function fillDemo(email, password, role) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            currentRole = role;
+            
+            if (role === 'admin') {
+                document.getElementById('modalAdminLink').className = 'btn btn-primary';
+                document.getElementById('modalClientLink').className = 'btn btn-outline-secondary';
+            } else {
+                document.getElementById('modalClientLink').className = 'btn btn-primary';
+                document.getElementById('modalAdminLink').className = 'btn btn-outline-secondary';
+            }
+        }
+
         document.getElementById('loginDemoForm').addEventListener('submit', function (e) {
             e.preventDefault();
+            var email = document.getElementById('email').value.trim();
+            if (email === 'admin@example.com') {
+                window.location.href = 'admin.html';
+                return;
+            }
+            if (email === 'test@example.com') {
+                window.location.href = 'bookings.html';
+                return;
+            }
             var modal = new bootstrap.Modal(document.getElementById('authDemoModal'));
             modal.show();
         });
+
         function demoGoogleLogin() {
             var modal = new bootstrap.Modal(document.getElementById('authDemoModal'));
             modal.show();
         }
+
         function demoForgotPassword() {
             alert("Demo Notice: Password reset tokens and emails are handled by Laravel Mail in production.");
         }

@@ -157,6 +157,31 @@
                 </div>
             @endif
 
+            <!-- Quick Demo Credentials Box -->
+            <div class="card bg-light border-0 mb-4 p-3 rounded-3">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="bi bi-key-fill text-primary me-2"></i>
+                    <strong class="text-dark small">Demo Login Credentials</strong>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-primary btn-sm w-100 text-start py-2 px-2" onclick="fillCredentials('admin@example.com', 'password')">
+                            <span class="d-block fw-bold" style="font-size:0.8rem;">🛡️ Admin</span>
+                            <span class="text-muted d-block text-truncate" style="font-size:0.72rem;">admin@example.com</span>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-outline-secondary btn-sm w-100 text-start py-2 px-2" onclick="fillCredentials('test@example.com', 'password')">
+                            <span class="d-block fw-bold" style="font-size:0.8rem;">👤 Client</span>
+                            <span class="text-muted d-block text-truncate" style="font-size:0.72rem;">test@example.com</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-muted text-center mt-2" style="font-size:0.72rem;">
+                    Password for both: <code class="text-primary fw-bold">password</code> (Tap to auto-fill)
+                </div>
+            </div>
+
             <form method="POST" action="{{ route('loginCheck') }}">
                 @csrf
 
@@ -203,3 +228,17 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function fillCredentials(email, password) {
+        var emailInput = document.getElementById('email');
+        var passwordInput = document.getElementById('password');
+        if (emailInput && passwordInput) {
+            emailInput.value = email;
+            passwordInput.value = password;
+            emailInput.focus();
+        }
+    }
+</script>
+@endpush
