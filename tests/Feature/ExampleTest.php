@@ -79,6 +79,26 @@ class ExampleTest extends TestCase
         $this->assertDatabaseHas('bookings', ['id' => $pending->id, 'status' => 'pending']);
     }
 
+    public function test_admin_can_access_all_admin_panel_pages(): void
+    {
+        $admin = $this->createUser(['isAdmin' => true]);
+        $service = $this->createService();
+
+        $routes = [
+            route('viewAdminPanel'),
+            route('viewServiceList'),
+            route('viewServiceAddForm'),
+            route('viewServiceEditForm', $service->id),
+            route('adminUsers'),
+            route('admin.bookings'),
+            route('contactMessages'),
+        ];
+
+        foreach ($routes as $route) {
+            $this->actingAs($admin)->get($route)->assertOk();
+        }
+    }
+
     private function createUser(array $attributes = []): object
     {
         $userClass = implode(chr(92), ['App', 'Models', 'User']);

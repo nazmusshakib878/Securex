@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Dashboard</title>
-    <link href="/site/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('site/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
@@ -551,12 +551,14 @@
         }
 
         .ops-summary-copy h3 {
+            color: #ffffff !important;
             font-size: 1.6rem;
+            font-weight: 700;
             margin-bottom: .45rem;
         }
 
         .ops-summary-copy p {
-            color: rgba(255, 255, 255, .72);
+            color: rgba(255, 255, 255, .85) !important;
             margin-bottom: 0;
             max-width: 620px;
         }
@@ -567,14 +569,21 @@
         }
 
         .ops-summary-actions a {
+            background: rgba(255, 255, 255, .12);
             border: 1px solid rgba(255, 255, 255, .26);
             border-radius: 8px;
-            color: #fff;
+            color: #fff !important;
             font-size: .9rem;
             font-weight: 700;
-            padding: .65rem .85rem;
+            padding: .65rem 1.1rem;
             text-decoration: none;
             white-space: nowrap;
+            transition: all .2s ease;
+        }
+
+        .ops-summary-actions a:hover {
+            background: #fff;
+            color: #102a43 !important;
         }
 
         .ops-section-card,
@@ -870,6 +879,7 @@
             sidebarBackdrop.addEventListener('click', closeSidebar);
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

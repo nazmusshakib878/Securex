@@ -12,8 +12,8 @@
             <a href="{{ route('viewServiceAddForm') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg me-1"></i>Add Service
             </a>
-            <a href="{{ route('home') }}" class="btn btn-outline-secondary">
-                <i class="bi bi-globe me-1"></i>View Site
+            <a href="{{ route('contactMessages') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-envelope me-1"></i>View Messages ({{ $contactMessages }})
             </a>
         </div>
     </div>
@@ -27,7 +27,7 @@
                     <p>Keep new requests moving and check visitor messages before updating service listings.</p>
                 </div>
                 <div class="ops-summary-actions">
-                        <a href="{{ route('admin.bookings') }}">Open inbox</a>
+                    <a href="{{ route('admin.bookings') }}"><i class="bi bi-calendar-check me-1"></i>Review Bookings</a>
                 </div>
             </div>
 
@@ -37,11 +37,21 @@
                         <div class="page-header-kicker">Bookings</div>
                         <h5 class="mb-0">Latest Requests</h5>
                     </div>
-                    <span>{{ $totalBookings }} total</span>
+                    <a href="{{ route('admin.bookings') }}" class="text-decoration-none fw-semibold small">{{ $totalBookings }} total &rarr;</a>
                 </div>
 
                 <div class="ops-table">
                     @forelse($recentBookings as $booking)
+                        @php
+                            $statusBadge = match($booking->status) {
+                                'pending' => 'warning text-dark',
+                                'accepted', 'approved' => 'success text-white',
+                                'completed' => 'info text-dark',
+                                'rejected' => 'danger text-white',
+                                'canceled' => 'secondary text-white',
+                                default => 'secondary text-white'
+                            };
+                        @endphp
                         <div class="ops-table-row">
                             <div class="ops-person">
                                 <div class="ops-avatar">{{ strtoupper(substr($booking->name, 0, 1)) }}</div>
@@ -51,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="ops-service">{{ $booking->service->title ?? 'N/A' }}</div>
-                            <span class="badge bg-warning text-dark">{{ ucfirst($booking->status) }}</span>
+                            <span class="badge bg-{{ $statusBadge }}">{{ ucfirst($booking->status) }}</span>
                             <small class="text-muted text-end">{{ $booking->created_at->format('M d, Y') }}</small>
                         </div>
                     @empty
@@ -92,8 +102,12 @@
                 <div class="ops-message-list">
                     @forelse($recentContactMessages as $message)
                         <div class="ops-message">
-                            <strong>{{ $message->subject }} ({{ $message->service->title ?? 'General Inquiry' }})</strong>
-                            <span>{{ $message->name }} - {{ $message->created_at->diffForHumans() }}</span>
+                            <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                <strong class="text-dark">{{ $message->name }}</strong>
+                                <small class="text-muted">{{ $message->created_at->diffForHumans() }}</small>
+                            </div>
+                            <div class="small text-primary fw-semibold mb-1">{{ $message->service->title ?? 'General Inquiry' }} &bull; <span class="text-muted">{{ $message->subject }}</span></div>
+                            <span class="text-muted small">{{ \Illuminate\Support\Str::limit($message->message, 65) }}</span>
                         </div>
                     @empty
                         <div class="empty-dashboard-state">No inquiries yet.</div>
