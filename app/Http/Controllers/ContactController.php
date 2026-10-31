@@ -23,9 +23,9 @@ class ContactController extends Controller
 
         ContactMessage::create($data);
 
-        Alert::success('Success', 'Your booking request has been sent successfully.');
+        Alert::success('Success', 'Your inquiry has been sent successfully. Our team will contact you shortly.');
 
-        return redirect(route('home') . '#booking');
+        return redirect(route('home') . '#quote');
     }
 
     public function index()

@@ -64,9 +64,16 @@
                             <h6>Payment Instructions</h6>
                             <p>Please complete any outstanding payment for the service listed above. If you have any questions or need assistance, contact our support team.</p>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('user.bookings') }}" class="btn btn-outline-secondary">Back to My Bookings</a>
-                            <a href="mailto:info@example.com" class="btn btn-primary">Contact Support</a>
+                        <div class="d-flex flex-wrap gap-2 justify-content-between">
+                            <a href="{{ Auth::user() && Auth::user()->isAdmin ? route('admin.bookings') : route('user.bookings') }}" class="btn btn-outline-secondary">
+                                &larr; Back to {{ Auth::user() && Auth::user()->isAdmin ? 'Bookings Management' : 'My Bookings' }}
+                            </a>
+                            <div class="d-flex gap-2">
+                                <button type="button" onclick="window.print()" class="btn btn-outline-primary">
+                                    <i class="fa fa-print me-1"></i> Print Invoice
+                                </button>
+                                <a href="mailto:info@example.com" class="btn btn-primary">Contact Support</a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -103,8 +103,13 @@ class BookingController extends Controller
         }
 
         if ($oldStatus !== $newStatus) {
-            Mail::to($booking->email)->send(new BookingStatusChanged($booking, $newStatus));
-            Alert::success('Success', 'Booking status updated and notification email sent.');
+            try {
+                Mail::to($booking->email)->send(new BookingStatusChanged($booking, $newStatus));
+                Alert::success('Success', 'Booking status updated and notification email sent.');
+            } catch (\Throwable $e) {
+                logger()->error('Booking status email sending failed: ' . $e->getMessage());
+                Alert::success('Success', 'Booking status updated successfully (notification email logged).');
+            }
         } else {
             Alert::success('Success', 'Booking status updated successfully.');
         }

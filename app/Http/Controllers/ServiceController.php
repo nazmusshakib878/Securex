@@ -24,7 +24,7 @@ class ServiceController extends Controller
         unset($data['short_description']);
 
         Service::create($data);
-        Alert::success('Success', 'Service create Successfull');
+        Alert::success('Success', 'Service created successfully');
 
         return redirect()->route("viewServiceList");
     }
@@ -57,7 +57,7 @@ class ServiceController extends Controller
         $data['isActive'] = $req->isActive == "on" ? 1 : 0;
 
         Service::where(["id"=>$validated['id']])->update($data);
-        Alert::success('Success', 'Service updated Successfully');
+        Alert::success('Success', 'Service updated successfully');
 
         return redirect()->route("viewServiceList");
     }
@@ -71,7 +71,7 @@ class ServiceController extends Controller
 
         $service->delete();
 
-        Alert::success('Success', 'Service deleted Successfully');
+        Alert::success('Success', 'Service deleted successfully');
 
         return redirect()->back();
     }

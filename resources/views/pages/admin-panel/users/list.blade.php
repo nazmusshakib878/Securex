@@ -7,7 +7,7 @@
             <div>
                 <div class="page-header-kicker">People</div>
                 <h5 class="card-title mb-1">Users</h5>
-                <p class="text-muted mb-0">Signup kore je users register korse tader details.</p>
+                <p class="text-muted mb-0">Registered clients, system operators, and administrator accounts.</p>
             </div>
             <span class="badge bg-primary">{{ $users->total() }} Users</span>
         </div>
