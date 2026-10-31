@@ -1,0 +1,21 @@
+# Ignore Laravel backend dependencies and runtime files
+/vendor/
+/node_modules/
+/storage/*.key
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+/.git/
+/.github/
+/.env
+/.env.*
+/.phpunit.result.cache
+/tests/
+/documentation/
+/database/*.sqlite*
+/scripts/
+composer.lock
+package-lock.json
+*.drawio
+

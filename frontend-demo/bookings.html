@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>My Bookings - SecureX Customer Portal (Demo)</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicon -->
+    <link href="favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="site/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="site/css/style.css" rel="stylesheet">
+
+    <style>
+        .demo-ribbon {
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+        .demo-ribbon .badge {
+            background-color: #0d6efd;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-ribbon">
+        <span class="badge">DEMO MODE</span>
+        <strong>SecureX Client Portal Preview</strong> &mdash; Demonstrates customer booking management, invoice generation, and status tracking.
+        <a href="index.html" class="text-info ms-2">&larr; Back to Home</a>
+    </div>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 px-4 px-lg-5 shadow-sm">
+        <a href="index.html" class="navbar-brand d-flex align-items-center">
+            <h2 class="m-0 text-primary">Securex</h2>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-4 py-lg-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="index.html#services" class="nav-item nav-link">Service</a>
+                <a href="index.html#projects" class="nav-item nav-link">Project</a>
+                <a href="bookings.html" class="nav-item nav-link active">My Bookings</a>
+                <a href="index.html#booking" class="nav-item nav-link">Book Service</a>
+            </div>
+            <div class="h-100 d-lg-inline-flex align-items-center gap-2">
+                <a class="btn btn-outline-primary rounded-pill py-2 px-4" href="login.html">Demo Login</a>
+                <a class="btn btn-primary rounded-pill py-2 px-4" href="index.html#booking">New Booking</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+                <div>
+                    <span class="text-primary fw-bold text-uppercase">Customer Control Room</span>
+                    <h1 class="display-6 mb-1">My Bookings (Interactive Demo)</h1>
+                    <p class="text-muted mb-0">Track verified time slots, service invoices and technician dispatch progress.</p>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a href="index.html#booking" class="btn btn-primary rounded-pill px-4 py-2">
+                        <i class="bi bi-plus-lg me-1"></i> New Booking Request
+                    </a>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4">#</th>
+                                    <th>Service</th>
+                                    <th>Price</th>
+                                    <th>Scheduled Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Status</th>
+                                    <th>Site Requirement</th>
+                                    <th>Submitted</th>
+                                    <th class="pe-4 text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1: Pending -->
+                                <tr>
+                                    <td class="ps-4 fw-bold">#101</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Commercial CCTV System</div>
+                                        <small class="text-muted">16 Channel 4K Cameras</small>
+                                    </td>
+                                    <td class="fw-bold text-primary">$250.00</td>
+                                    <td>Nov 02, 2026</td>
+                                    <td><span class="badge bg-light text-dark border">09:00 AM</span></td>
+                                    <td><span class="badge bg-warning text-dark px-3 py-2">Pending</span></td>
+                                    <td><small class="text-muted">Main headquarters entrance & perimeter inspection.</small></td>
+                                    <td>Oct 31, 2026</td>
+                                    <td class="pe-4 text-end">
+                                        <button class="btn btn-sm btn-outline-danger" onclick="cancelDemo(101)">Cancel</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2: Accepted -->
+                                <tr>
+                                    <td class="ps-4 fw-bold">#102</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Fire Detection And Safety</div>
+                                        <small class="text-muted">Control Panel & Sensors</small>
+                                    </td>
+                                    <td class="fw-bold text-primary">$300.00</td>
+                                    <td>Nov 05, 2026</td>
+                                    <td><span class="badge bg-light text-dark border">11:00 AM</span></td>
+                                    <td><span class="badge bg-success px-3 py-2">Accepted</span></td>
+                                    <td><small class="text-muted">Technician assigned and parts dispatched.</small></td>
+                                    <td>Oct 29, 2026</td>
+                                    <td class="pe-4 text-end">
+                                        <a href="invoice.html" class="btn btn-sm btn-outline-primary me-1">Invoice</a>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="cancelDemo(102)">Cancel</button>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3: Completed -->
+                                <tr>
+                                    <td class="ps-4 fw-bold">#103</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Smart Home Security</div>
+                                        <small class="text-muted">Wireless Mobile App Setup</small>
+                                    </td>
+                                    <td class="fw-bold text-primary">$220.00</td>
+                                    <td>Oct 28, 2026</td>
+                                    <td><span class="badge bg-light text-dark border">03:00 PM</span></td>
+                                    <td><span class="badge bg-info text-dark px-3 py-2">Completed</span></td>
+                                    <td><small class="text-muted">Installation verified; customer signed off on mobile app.</small></td>
+                                    <td>Oct 25, 2026</td>
+                                    <td class="pe-4 text-end">
+                                        <a href="invoice.html" class="btn btn-sm btn-primary">View Invoice</a>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 4: Canceled -->
+                                <tr>
+                                    <td class="ps-4 fw-bold">#104</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Finger Print Access</div>
+                                        <small class="text-muted">Biometric Executive Door Lock</small>
+                                    </td>
+                                    <td class="fw-bold text-primary">$180.00</td>
+                                    <td>Oct 20, 2026</td>
+                                    <td><span class="badge bg-light text-dark border">01:00 PM</span></td>
+                                    <td><span class="badge bg-secondary px-3 py-2">Canceled</span></td>
+                                    <td><small class="text-muted">Canceled by customer due to room renovation.</small></td>
+                                    <td>Oct 18, 2026</td>
+                                    <td class="pe-4 text-end">
+                                        <span class="text-muted small">Closed</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lifecycle Explain Panel -->
+            <div class="row g-4 mt-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                        <div class="display-6 text-warning mb-2"><i class="bi bi-hourglass-split"></i></div>
+                        <h5>1. Pending Review</h5>
+                        <p class="text-muted small mb-0">Customer selects future date and time slot. System validates slot uniqueness and notifies the admin.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                        <div class="display-6 text-success mb-2"><i class="bi bi-shield-check"></i></div>
+                        <h5>2. Admin Accepted</h5>
+                        <p class="text-muted small mb-0">Admin accepts the booking, reserves the technician team, and dispatches an automated email notification.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                        <div class="display-6 text-primary mb-2"><i class="bi bi-receipt"></i></div>
+                        <h5>3. Completed & Invoiced</h5>
+                        <p class="text-muted small mb-0">On completion, a printable official invoice is generated with itemized pricing and payment details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Action Modal -->
+    <div class="modal fade" id="demoCancelModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="bi bi-x-circle-fill me-2"></i>Cancel Booking (Demo)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <i class="bi bi-info-circle text-danger display-5 mb-3 d-block"></i>
+                    <h5 class="fw-bold mb-2">Simulated Cancellation</h5>
+                    <p class="text-muted mb-3" id="cancelModalText">In the production Laravel application, this cancels booking #101, updates the status, frees up the date/slot, and notifies the admin.</p>
+                    <div class="alert alert-light text-start small border">
+                        <strong>Security Rule:</strong> In the backend, a strict middleware policy ensures only the authenticated owner of the booking (or admin) can execute a cancellation.
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-secondary footer mt-5 py-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Address</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Services</h5>
+                    <a class="btn btn-link" href="index.html#services">Business Security</a>
+                    <a class="btn btn-link" href="index.html#services">Fire Detection</a>
+                    <a class="btn btn-link" href="index.html#services">Alarm Systems</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Quick Links</h5>
+                    <a class="btn btn-link" href="index.html">Home</a>
+                    <a class="btn btn-link" href="about.html">About</a>
+                    <a class="btn btn-link" href="invoice.html">Invoice Preview</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">SecureX Platform</h5>
+                    <p>CCTV, biometric locks, and security management with automated scheduling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid py-4" style="background: #000000;">
+        <div class="container text-center text-white-50">
+            &copy; <a class="border-bottom text-white" href="index.html">SecureX</a>, All Right Reserved. Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="site/js/main.js"></script>
+    <script>
+        function cancelDemo(id) {
+            document.getElementById('cancelModalText').textContent = 
+                'In the production Laravel application, this cancels booking #' + id + ', updates the database status to "canceled", frees up the time slot for other users, and sends a notification email.';
+            var modal = new bootstrap.Modal(document.getElementById('demoCancelModal'));
+            modal.show();
+        }
+    </script>
+</body>
+
+</html>
+

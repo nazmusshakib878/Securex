@@ -210,6 +210,23 @@ php artisan serve
 composer run dev
 ```
 
+## 🌐 Render Deployment (Static Frontend Demo)
+
+SecureX features an isolated static frontend demonstration in `frontend-demo/` designed for seamless hosting on **Render.com's Free Web Service** via Docker:
+
+- **Runtime:** Docker (`Dockerfile` in root directory)
+- **Base Image:** `nginx:alpine`
+- **Port:** Dynamically binds to Render's `$PORT` (default `10000`)
+- **Web Docroot:** `frontend-demo/`
+- **Backend Preservation:** The complete Laravel 12 backend codebase (`app/`, `database/`, `routes/`, `resources/views/`) remains fully preserved and functional for backend development.
+
+### Render Web Service Setup:
+1. Connect your GitHub repository to Render.
+2. Select **Web Service** with **Docker** runtime.
+3. Branch: `main`
+4. Root Directory: `./` (or leave blank)
+5. Instance Type: **Free** (No credit card or paid databases required).
+
 ## ⚙️ Configuration
 
 ### Google OAuth

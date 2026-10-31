@@ -17,7 +17,7 @@ class AdminController extends Controller
             'totalBookings' => Booking::count(),
             'recentBookings' => Booking::with(['service', 'user'])->latest()->take(5)->get(),
             'contactMessages' => ContactMessage::count(),
-            'recentContactMessages' => ContactMessage::latest()->take(5)->get(),
+            'recentContactMessages' => ContactMessage::with('service')->latest()->take(5)->get(),
         ]);
     }
 

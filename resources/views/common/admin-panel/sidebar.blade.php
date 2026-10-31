@@ -58,6 +58,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('contactMessages') ? 'active' : '' }}" href="{{ route('contactMessages') }}">
+                        <span class="nav-index">06</span>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                     <button type="submit" class="nav-link nav-link-logout border-0 bg-transparent w-100">

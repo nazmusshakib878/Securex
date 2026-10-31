@@ -6,8 +6,12 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
                 <div class="page-header-kicker">Inbox</div>
-                    <h5 class="card-title mb-1">Booking Requests</h5>
-                    <p class="text-muted mb-0">Requests submitted from the website booking form.</p>
+                <h5 class="card-title mb-1">Customer Inquiries & Quotes</h5>
+                <p class="text-muted mb-0">Messages and quote requests submitted from the website contact form.</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
@@ -24,14 +28,14 @@
                         <tr>
                             <td class="fw-semibold">{{ $message->name }}</td>
                             <td>{{ $message->email }}</td>
-                            <td>{{ $message->service->title ?? 'N/A' }}</td>
+                            <td>{{ $message->service->title ?? 'General Inquiry' }}</td>
                             <td class="fw-semibold">{{ $message->subject }}</td>
                             <td>{{ \Illuminate\Support\Str::limit($message->message, 90) }}</td>
                             <td>{{ $message->created_at->format('M d, Y') }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No booking requests yet.</td>
+                            <td colspan="6" class="text-center text-muted py-4">No contact messages yet.</td>
                         </tr>
                     @endforelse
                 </tbody>

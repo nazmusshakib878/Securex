@@ -84,19 +84,19 @@
                 <div class="ops-section-head">
                     <div>
                         <div class="page-header-kicker">Inbox</div>
-                        <h5 class="mb-0">Recent Booking</h5>
+                        <h5 class="mb-0">Recent Messages</h5>
                     </div>
-                    <a href="{{ route('admin.bookings') }}">View</a>
+                    <a href="{{ route('contactMessages') }}">View All</a>
                 </div>
 
                 <div class="ops-message-list">
                     @forelse($recentContactMessages as $message)
                         <div class="ops-message">
-                            <strong>{{ $message->subject }}</strong>
+                            <strong>{{ $message->subject }} ({{ $message->service->title ?? 'General Inquiry' }})</strong>
                             <span>{{ $message->name }} - {{ $message->created_at->diffForHumans() }}</span>
                         </div>
                     @empty
-                        <div class="empty-dashboard-state">No booking requests yet.</div>
+                        <div class="empty-dashboard-state">No inquiries yet.</div>
                     @endforelse
                 </div>
             </div>
@@ -104,6 +104,8 @@
             <div class="ops-shortcuts">
                 <a href="{{ route('adminUsers') }}"><i class="bi bi-people"></i>Users</a>
                 <a href="{{ route('viewServiceList') }}"><i class="bi bi-card-list"></i>Services</a>
+                <a href="{{ route('admin.bookings') }}"><i class="bi bi-calendar-check"></i>Bookings</a>
+                <a href="{{ route('contactMessages') }}"><i class="bi bi-envelope"></i>Messages</a>
             </div>
         </aside>
     </div>
