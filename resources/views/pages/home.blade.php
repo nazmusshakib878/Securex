@@ -137,8 +137,8 @@
                             <div class="col-12 col-lg-8 text-center">
                                 <h1 class="display-3 text-white animated slideInDown mb-4">Best CCTV & Security Solution For You</h1>
                                 <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                <a href="" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
+                                <a href="#about" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
+                                <a href="#quote" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
                             </div>
                         </div>
                     </div>
@@ -152,8 +152,8 @@
                             <div class="col-12 col-lg-8 text-center">
                                 <h1 class="display-3 text-white animated slideInDown mb-4">Smart Security Solution For All Business</h1>
                                 <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                <a href="" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
+                                <a href="#about" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
+                                <a href="#quote" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
                             </div>
                         </div>
                     </div>
@@ -167,8 +167,8 @@
                             <div class="col-12 col-lg-8 text-center">
                                 <h1 class="display-3 text-white animated slideInDown mb-4">Innovative Solution For Security System</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                <a href="" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
+                                <a href="#about" class="btn btn-primary rounded-pill py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
+                                <a href="#quote" class="btn btn-light rounded-pill py-md-3 px-md-5 animated slideInRight">Free Quote</a>
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
 
 
     <!-- About Start -->
-    <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0" id="about">
         <div class="container about px-lg-0">
             <div class="row g-0 mx-lg-0">
                 <div class="col-lg-6 ps-lg-0" style="min-height: 400px;">
@@ -266,7 +266,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="" class="btn btn-primary rounded-pill py-3 px-5">Explore More</a>
+                        <a href="{{ route('about') }}" class="btn btn-primary rounded-pill py-3 px-5">Explore More</a>
                     </div>
                 </div>
             </div>
@@ -276,7 +276,7 @@
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-5" id="services">
         <div class="container">
             <div class="text-center">
                 <div class="bg-primary mb-3 mx-auto" style="width: 60px; height: 2px;"></div>
@@ -385,8 +385,8 @@
                 <div class="col-12 text-center">
                     <ul class="list-inline mb-5" id="portfolio-flters">
                         <li class="mx-2 active" data-filter="*">All</li>
-                        <li class="mx-2" data-filter=".first">Complete Projects</li>
-                        <li class="mx-2" data-filter=".second">Ongoing Projects</li>
+                        <li class="mx-2" data-filter=".first">Commercial Security</li>
+                        <li class="mx-2" data-filter=".second">Residential Security</li>
                     </ul>
                 </div>
             </div>
@@ -396,14 +396,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-1.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">Business Security</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">Commercial Surveillance & Access Control</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">Business Security</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">Commercial Surveillance & Access Control</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-1.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -413,14 +413,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-2.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">Fire Detection</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">Enterprise Fire & Smoke Detection System</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">Fire Detection</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">Enterprise Fire & Smoke Detection System</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-2.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -430,14 +430,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-3.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">Access Control</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">Biometric Turnstiles & Office Access</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">Access Control</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">Biometric Turnstiles & Office Access</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-3.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -447,14 +447,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-4.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">Alarm Systems</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">Integrated Perimeter Alarm Network</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">Alarm Systems</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">Integrated Perimeter Alarm Network</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-4.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -464,14 +464,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-5.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">CCTV & Video</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">4K High-Definition CCTV Matrix</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">CCTV & Video</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">4K High-Definition CCTV Matrix</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-5.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -481,14 +481,14 @@
                         <img class="img-fluid w-100" src="{{ $siteAsset }}/img/portfolio-6.jpg" alt="">
                         <div class="text-center p-4">
                             <p class="text-primary mb-2">Smart Home</p>
-                            <h5 class="lh-base mb-0">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-0">Smart Home Intrusion & Automation</h5>
                         </div>
                         <div class="portfolio-text text-center bg-white p-4">
                             <p class="text-primary mb-2">Smart Home</p>
-                            <h5 class="lh-base mb-3">Smart CCTV Security Systems That Fits Your Business</h5>
+                            <h5 class="lh-base mb-3">Smart Home Intrusion & Automation</h5>
                             <div class="d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary rounded-circle mx-1" href="{{ $siteAsset }}/img/portfolio-6.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle mx-1" href="#booking" title="Book service"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                     </div>
@@ -497,6 +497,56 @@
         </div>
     </div>
     <!-- Projects End -->
+
+
+    <!-- Quote Start -->
+    <div class="container-fluid bg-light overflow-hidden my-5 px-lg-0" id="quote">
+        <div class="container quote px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 ps-lg-0" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="{{ $siteAsset }}/img/quote.jpg" style="object-fit: cover;" alt="Free Quote">
+                    </div>
+                </div>
+                <div class="col-lg-6 quote-text py-5 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="p-lg-5 pe-lg-0">
+                        <div class="bg-primary mb-3" style="width: 60px; height: 2px;"></div>
+                        <h1 class="display-5 mb-5">Request A Free Quote</h1>
+                        <p class="mb-4 pb-2">Looking for a customized CCTV setup or security consultation? Fill out your details below and our team will get back to you promptly.</p>
+                        <form action="{{ route('contact.store') }}" method="POST">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <input type="text" name="name" class="form-control border-0" placeholder="Your Name" style="height: 55px;" value="{{ old('name', auth()->user()->name ?? '') }}" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="email" name="email" class="form-control border-0" placeholder="Your Email" style="height: 55px;" value="{{ old('email', auth()->user()->email ?? '') }}" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="text" name="phone" class="form-control border-0" placeholder="Your Phone Number" style="height: 55px;" value="{{ old('phone', auth()->user()->phone ?? '') }}" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <select name="service_id" class="form-select border-0" style="height: 55px;">
+                                        <option value="">Select A Service (Optional)</option>
+                                        @foreach($services as $service)
+                                            <option value="{{ $service->id }}" @selected(old('service_id') == $service->id)>{{ $service->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <textarea name="message" class="form-control border-0" placeholder="Special Note or Requirements" rows="3" required>{{ old('message') }}</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Submit Quote Request</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quote End -->
 
 
     <!-- Team Start -->
@@ -510,64 +560,64 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item">
                         <div class="overflow-hidden position-relative">
-                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-1.jpg" alt="">
+                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-1.jpg" alt="Nazmus Shakib">
                             <div class="team-social">
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <span class="text-primary">Designation</span>
+                            <h5 class="mb-0">Nazmus Shakib</h5>
+                            <span class="text-primary">Lead Architect</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item">
                         <div class="overflow-hidden position-relative">
-                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-2.jpg" alt="">
+                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-2.jpg" alt="Tahsin Ahmed">
                             <div class="team-social">
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <span class="text-primary">Designation</span>
+                            <h5 class="mb-0">Tahsin Ahmed</h5>
+                            <span class="text-primary">Network Engineer</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item">
                         <div class="overflow-hidden position-relative">
-                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-3.jpg" alt="">
+                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-3.jpg" alt="Anika Tabassum">
                             <div class="team-social">
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <span class="text-primary">Designation</span>
+                            <h5 class="mb-0">Anika Tabassum</h5>
+                            <span class="text-primary">Operations Manager</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item">
                         <div class="overflow-hidden position-relative">
-                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-4.jpg" alt="">
+                            <img class="img-fluid" src="{{ $siteAsset }}/img/team-4.jpg" alt="Kamrul Hasan">
                             <div class="team-social">
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-dark rounded-circle m-1" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-dark rounded-circle m-1" href="#"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Full Name</h5>
-                            <span class="text-primary">Designation</span>
+                            <h5 class="mb-0">Kamrul Hasan</h5>
+                            <span class="text-primary">Field Specialist</span>
                         </div>
                     </div>
                 </div>
@@ -586,19 +636,19 @@
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='{{ $siteAsset }}/img/testimonial-1.jpg' alt=''>">
-                    <p class="fs-5">Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                    <h4>Client Name</h4>
-                    <span class="text-primary">Profession</span>
+                    <p class="fs-5">SecureX outfitted our entire 80,000 sq ft logistics depot with IP PTZ cameras and an AI license plate recognition system. Security response time dropped by 85% within the first month.</p>
+                    <h4>Marcus Vance</h4>
+                    <span class="text-primary">Logistics Director, Metro Warehouses</span>
                 </div>
                 <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='{{ $siteAsset }}/img/testimonial-2.jpg' alt=''>">
-                    <p class="fs-5">Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                    <h4>Client Name</h4>
-                    <span class="text-primary">Profession</span>
+                    <p class="fs-5">The perimeter intrusion and access control turnstiles designed by SecureX gave us audit-grade compliance and peace of mind. Their 24/7 technical dispatch team is unparalleled.</p>
+                    <h4>Sarah Lin</h4>
+                    <span class="text-primary">Chief Information Security Officer</span>
                 </div>
                 <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='{{ $siteAsset }}/img/testimonial-3.jpg' alt=''>">
-                    <p class="fs-5">Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                    <h4>Client Name</h4>
-                    <span class="text-primary">Profession</span>
+                    <p class="fs-5">From initial quotation to final calibration, the SecureX engineering crew was remarkably thorough. Our residential estate smart security network runs flawlessly.</p>
+                    <h4>David Reynolds</h4>
+                    <span class="text-primary">Estate Manager, Highland Heights</span>
                 </div>
             </div>
         </div>
@@ -648,7 +698,7 @@
                                 <div class="form-text booking-service-price text-secondary">Select a service to see the price.</div>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="date" name="booking_date" class="form-control bg-light border-0" value="{{ old('booking_date') }}" style="height: 55px;" required>
+                                <input type="date" name="booking_date" class="form-control bg-light border-0" value="{{ old('booking_date') }}" min="{{ date('Y-m-d') }}" style="height: 55px;" required>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <select name="time_slot" class="form-select bg-light border-0" style="height: 55px;" required>
@@ -683,31 +733,31 @@
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                     <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href="#"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Services</h5>
-                    <a class="btn btn-link" href="">Business Security</a>
-                    <a class="btn btn-link" href="">Fire Detection</a>
-                    <a class="btn btn-link" href="">Alarm Systems</a>
-                    <a class="btn btn-link" href="">CCTV & Video</a>
-                    <a class="btn btn-link" href="">Smart Home</a>
+                    <a class="btn btn-link" href="#services">Business Security</a>
+                    <a class="btn btn-link" href="#services">Fire Detection</a>
+                    <a class="btn btn-link" href="#services">Alarm Systems</a>
+                    <a class="btn btn-link" href="#services">CCTV & Video</a>
+                    <a class="btn btn-link" href="#services">Smart Home</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Quick Links</h5>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Booking</a>
-                    <a class="btn btn-link" href="">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
+                    <a class="btn btn-link" href="{{ route('about') }}">About Us</a>
+                    <a class="btn btn-link" href="#booking">Booking</a>
+                    <a class="btn btn-link" href="#services">Our Services</a>
+                    <a class="btn btn-link" href="#quote">Free Quote</a>
+                    <a class="btn btn-link" href="{{ route('user.bookings') }}">My Bookings</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Newsletter</h5>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                    <p>Subscribe for regular security advisory and safety updates.</p>
                     <div class="position-relative w-100">
                         <input class="form-control bg-transparent border-secondary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                         <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
@@ -724,7 +774,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+                    &copy; <a class="border-bottom" href="{{ route('home') }}">Securex</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
@@ -785,6 +835,13 @@
                     serviceSelect.dispatchEvent(new Event('change'));
                 });
             });
+
+            if (document.querySelector('#booking .alert-danger')) {
+                var bookingEl = document.getElementById('booking');
+                if (bookingEl) {
+                    bookingEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         });
     </script>
 </body>

@@ -89,6 +89,11 @@
                     <a href="{{ route('home') }}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                     @auth
+                        @if(Auth::user()->isAdmin)
+                            <a href="{{ route('viewAdminPanel') }}" class="nav-item nav-link">Dashboard</a>
+                        @else
+                            <a href="{{ route('user.bookings') }}" class="nav-item nav-link">My Bookings</a>
+                        @endif
                         <form method="POST" action="{{ route('logout') }}" class="d-inline ms-lg-3">
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-modern px-4">Logout</button>

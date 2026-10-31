@@ -77,10 +77,19 @@
     font-weight: normal;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+[id] {
+    scroll-margin-top: 85px;
+}
+
 /*** Navbar ***/
 .navbar.sticky-top {
-    top: -100px;
-    transition: .5s;
+    top: 0;
+    transition: all .3s ease-in-out;
+    z-index: 1020;
 }
 
 .navbar .navbar-brand {
@@ -184,45 +193,51 @@
 
 .header-carousel .owl-nav {
     position: absolute;
-    width: 200px;
+    width: 100%;
     height: 45px;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
+    padding: 0 35px;
+    z-index: 10;
+    pointer-events: none;
 }
 
 .header-carousel .owl-nav .owl-prev,
 .header-carousel .owl-nav .owl-next {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    background: transparent;
-    border: 1px solid #FFFFFF;
-    border-radius: 45px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 48px;
     font-size: 22px;
-    transition: .5s;
+    transition: .4s;
+    pointer-events: auto;
 }
 
 .header-carousel .owl-nav .owl-prev:hover,
 .header-carousel .owl-nav .owl-next:hover {
     background: var(--primary);
     border-color: var(--primary);
+    transform: scale(1.08);
 }
 
 .header-carousel .owl-dots {
     position: absolute;
     height: 45px;
-    bottom: 30px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .header-carousel .owl-dot {
@@ -306,11 +321,22 @@
     border-radius: 38px;
     white-space: nowrap;
     overflow: hidden;
-    transition: .5s;
+    transition: width .35s ease, background-color .3s ease, box-shadow .3s ease;
+    padding-left: 11px;
 }
 
-.service-item:hover .btn {
+.service-item:hover .btn,
+.service-item:focus-within .btn {
     width: 140px;
+    padding-right: 15px;
+    box-shadow: 0 4px 10px rgba(101, 181, 48, 0.4);
+}
+
+@media (max-width: 991.98px) {
+    .service-item .btn {
+        width: 140px !important;
+        padding-right: 15px;
+    }
 }
 
 
